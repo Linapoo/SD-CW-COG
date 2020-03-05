@@ -1,5 +1,6 @@
 target/
 .mvn
+upload-files/
 
 ### STS ###
 .apt_generated
