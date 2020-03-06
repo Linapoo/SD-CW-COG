@@ -18,7 +18,8 @@ Spring log file\
 http://www.cog.codes/log/spring/spring.log
 
 Nginx log file\
-http://www.cog.codes/log/nginx/access.log\
+http://www.cog.codes/log/nginx/access.log 
+
 http://www.cog.codes/log/nginx/error.log
 
 mongodb log file\
