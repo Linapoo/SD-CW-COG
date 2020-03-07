@@ -1,4 +1,4 @@
-### API
+# API
 
 **website**
 
@@ -77,7 +77,9 @@ http://www.cog.codes
     * Content: 1
 * Error Response
     * Status: 500
+
     Or
+    
     * Status: 200
     * Content: 0
 
@@ -95,7 +97,9 @@ http://www.cog.codes
 * Error Response
     * Status: 200
     * Content: null
+
     Or
+
     * Status: 500
 
 **Get User Avatar**
