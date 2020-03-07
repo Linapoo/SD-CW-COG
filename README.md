@@ -14,7 +14,7 @@ http://www.cog.codes
 
 ### Deployment
 
-[deploy.md](./deploy/README.md)
+[deploy](./deploy/)
 
 
 ### Log files
