@@ -1,5 +1,5 @@
 # Collection of Games
-a web game collection management and sourcing system
+A web game collection management and sourcing system
 
 ## API document
 [API.md](API.md)
@@ -8,10 +8,16 @@ a web game collection management and sourcing system
 http://www.cog.codes
 
 ## Development Util
-Server IP
+### Server IP
 
 68.183.42.79
 
+### Deployment
+
+[deploy.md](./deploy/README.md)
+
+
+### Log files
 Some log files can diretly be viewed by web browser:
 
 Spring log file\
@@ -22,5 +28,5 @@ http://www.cog.codes/log/nginx/access.log
 
 http://www.cog.codes/log/nginx/error.log
 
-mongodb log file\
+Mongodb log file\
 http://www.cog.codes/log/mongodb/mongodb.log
