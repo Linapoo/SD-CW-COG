@@ -24,7 +24,7 @@ http://www.cog.codes
         * age=[Integer]
 * Success Response
     * Status: 200
-    * Content: 1
+    * Content: {User}
 * Error Response
     * Status: 500
 
