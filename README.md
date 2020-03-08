@@ -10,7 +10,7 @@ http://www.cog.codes
 ## Development Util
 ### Server IP
 
-68.183.42.79
+206.189.121.92
 
 ### Deployment
 
