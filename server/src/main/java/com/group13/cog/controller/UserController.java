@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public int signUp(@NotBlank @RequestParam(value = "userName") String userName,
+    public User signUp(@NotBlank @RequestParam(value = "userName") String userName,
                       @NotBlank @RequestParam(value = "password") String pwd,
                       @RequestParam(value = "email", required = false) String email,
                       @RequestParam(value = "city", required = false) String city,

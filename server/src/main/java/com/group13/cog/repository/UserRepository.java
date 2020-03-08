@@ -27,14 +27,14 @@ public class UserRepository {
      * @param user The user model
      * @return 1 success, otherwise throw {@link DataDuplicateException}
      */
-    public int addNewUser(User user) {
+    public User addNewUser(User user) {
         Query query = new Query();
         query.addCriteria(Criteria.where("userName").is(user.getUserName()));
 
         User userRes = mongoTemplate.findOne(query, User.class);
         if (userRes == null) {
             mongoTemplate.insert(user);
-            return 1;
+            return user;
         } else {
             throw new DataDuplicateException(String.format("The userName <%s> exits.", user.getUserName()));
         }

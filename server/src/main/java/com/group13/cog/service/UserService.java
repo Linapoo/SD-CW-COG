@@ -14,7 +14,7 @@ public interface UserService {
      * @param user The user model
      * @return 1 success, otherwise throw {@link com.group13.cog.exception.DataDuplicateException}
      */
-    int signUp(User user);
+    User signUp(User user);
 
     /**
      * User login
