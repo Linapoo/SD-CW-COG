@@ -1,7 +1,10 @@
 package com.group13.cog.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -27,7 +30,10 @@ public class User {
     private Integer gender;
 
     private Integer age;
-
+    
+    @DBRef
+    private List<Game> games;
+    
     public User(String userName, String email, String avatar, String city, Integer gender, Integer age) {
         this.userName = userName;
         this.email = email;
@@ -36,7 +42,12 @@ public class User {
         this.gender = gender;
         this.age = age;
     }
-
+    public List<Game> getGames(){
+        return games;
+    }
+    public void setGames(List<Game> games){
+        this.games = games;
+    }
     public String getId() {
         return id;
     }

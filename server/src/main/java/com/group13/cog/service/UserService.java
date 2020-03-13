@@ -12,7 +12,8 @@ public interface UserService {
      * User register
      *
      * @param user The user model
-     * @return 1 success, otherwise throw {@link com.group13.cog.exception.DataDuplicateException}
+     * @return Return a user model to the client if success, 
+     * otherwise throw {@link com.group13.cog.exception.DataDuplicateException}
      */
     User signUp(User user);
 
