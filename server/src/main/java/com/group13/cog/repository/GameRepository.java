@@ -66,10 +66,10 @@ public class GameRepository {
      */
      public Page<Game> findAll(Integer pageSize, Integer pageNo){
          Query query = new Query();
-         int totalPage = (int) (mongoTemplate.count(query, Game.class)/pageSize);
+         int totalPage = (int) Math.ceil((double)mongoTemplate.count(query, Game.class)/pageSize);
          query.with(Sort.by(Direction.ASC, "gameName"));
-         query.skip((pageSize-1)*pageNo).limit(pageSize);
-         List<Game> data = mongoTemplate.findAll(Game.class);
+         query.skip(pageSize*(pageNo-1)).limit(pageSize);
+         List<Game> data = mongoTemplate.find(query, Game.class);
          Page<Game> page = new Page<Game>(data, pageSize, pageNo, totalPage);
          return page;
      }
