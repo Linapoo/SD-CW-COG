@@ -3,6 +3,7 @@ package com.group13.cog.repository;
 import java.util.List;
 
 import com.group13.cog.exception.DataDuplicateException;
+import com.group13.cog.exception.DataNotFoundException;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.model.User;
@@ -54,8 +55,12 @@ public class GameRepository {
     public int deleteGame (String gameId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(gameId));
-        mongoTemplate.remove(query, Game.class);
-        return 1;
+        Game gameRes = mongoTemplate.findAndRemove(query, Game.class);
+        if (gameRes != null) {
+            return 1;
+        } else {
+            throw new DataNotFoundException(String.format("The game <%s> not exits.", gameId));
+        }
     }
 
     /**
@@ -78,7 +83,7 @@ public class GameRepository {
      * Add a game to user game collection
      * @param userId
      * @param gameId
-     * @return 1 success
+     * @return 1 success or throw DataNotFoundExcrption if gameId not exits
      */
     public int addGameToUser(String userId, String gameId){
         Query query = new Query();
@@ -89,7 +94,7 @@ public class GameRepository {
             mongoTemplate.updateFirst(query, update, User.class);
             return 1;
         } else {
-            throw new DataDuplicateException(String.format("The game id <%s> not exits.", gameId));
+            throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
         }
     } 
     
@@ -97,7 +102,7 @@ public class GameRepository {
      * Delete a game from user game collection
      * @param userId
      * @param gameId
-     * @return 1 sucuess
+     * @return 1 sucuess or throw DataNotFoundException if the gameId not exits in user collection
      */
     public int deleteGameToUser(String userId, String gameId){
         Query query = new Query();
@@ -108,21 +113,22 @@ public class GameRepository {
             mongoTemplate.updateFirst(query, update, User.class);
             return 1;
         } else {
-            throw new DataDuplicateException(String.format("The game id <%s> not exits.", gameId));
+            throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
         }
     }
 
     /**
      * view a user game collection
      * @param userId
-     * @return a List<Game> for the user
+     * @return a Page<Game> for the user
      */
-    public List<Game> viewUserGame(String userId){
+    public Page<Game> viewUserGame(String userId, Integer pageSize, Integer pageNo){
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(userId));
         User user = mongoTemplate.findOne(query, User.class);
         List<Game> games = user.getGames();
-        return games;
+        Page<Game> page = new Page<Game>(games, pageSize,pageNo);
+        return page;
     }
    
     /**
@@ -132,18 +138,35 @@ public class GameRepository {
      * @return the game information
      */
     public Game findById(String gameId) {
-        return mongoTemplate.findById(new ObjectId(gameId), Game.class);
+        Game game = mongoTemplate.findById(new ObjectId(gameId), Game.class);
+        if (game != null){
+            return game;
+        } else {
+            throw new DataNotFoundException(String.format("The game id <%s> not exits", gameId));
+        }
     }
 
     /**
      * Find a game by game name.
      *
      * @param GameName The name of the game
+     * @param pageSize The number of element in one page  
+     * @param pageNo The number of page
      * @return A user model including the user information
      */
-     public Game findByName(String GameName){
+     public Page<Game> findByName(Integer pageSize, Integer pageNo, String GameName){
         Query query = new Query();
-        query.addCriteria(Criteria.where("gameName").is(GameName));
-        return mongoTemplate.findOne(query, Game.class);
-     }
+        query.addCriteria(Criteria.where("gameName").regex(GameName));
+        int totalPage = (int) Math.ceil((double)mongoTemplate.count(query, Game.class)/pageSize);
+        query.with(Sort.by(Direction.ASC, "gameName"));
+        query.skip(pageSize*(pageNo-1)).limit(pageSize);
+        List<Game> data = mongoTemplate.find(query, Game.class);
+        if (data != null){
+            Page<Game> page = new Page<Game>(data, pageSize, pageNo, totalPage);
+            return page;
+        } else {
+            throw new DataNotFoundException(String.format("No game match the name <%s>", GameName));
+        }
+    }
+
 }

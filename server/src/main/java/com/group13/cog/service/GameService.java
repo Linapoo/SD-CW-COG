@@ -73,8 +73,15 @@ public interface GameService {
      * @param gameId the game id
      * @return Return a Page of Game 
      */
-    ResponseEntity<List<Game>> viewUserGameColloct(String userId);
+    ResponseEntity<Page<Game>> viewUserGameColloct(String userId, Integer PageSize, Integer PageNo);
 
-
+    /**
+     * search game by game name
+     * @param pageSize
+     * @param pageNo
+     * @param gameName
+     * @return Return a Page of Game
+     */
+    ResponseEntity<Page<Game>> searchGame(Integer pageSize, Integer pageNo, String gameName);
 
 }

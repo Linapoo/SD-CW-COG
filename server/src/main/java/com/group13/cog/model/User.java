@@ -42,6 +42,8 @@ public class User {
         this.gender = gender;
         this.age = age;
     }
+
+    @JsonIgnore
     public List<Game> getGames(){
         return games;
     }
@@ -80,7 +82,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public String getAvatar() {
         return avatar;
     }

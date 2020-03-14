@@ -23,6 +23,16 @@ public class Page<T> {
         this.setTotalPage(totalPage);
     }
 
+    public Page(List<T> data, int pageSize, int pageNo){
+        int totalPage = (int) Math.ceil((double) data.size()/pageSize);
+        int start = pageSize*(pageNo-1)>=data.size()? data.size():pageSize*(pageNo-1);
+        int end = pageSize*pageNo >= data.size()? data.size():pageSize*pageNo;
+        this.setData(data.subList(start, end));
+        this.setPageSize(pageSize);
+        this.setPageNo(pageNo);
+        this.setTotalPage(totalPage);
+    }
+
     public void setData(List<T> data){
         this.data = data;
     }

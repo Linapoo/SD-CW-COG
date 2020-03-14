@@ -74,11 +74,18 @@ public class GameController {
     }
 
     @GetMapping("viewUserGame")
-    public ResponseEntity<List<Game>> viewUserGame(@NotBlank @RequestParam(value = "userId") String userId){
-        return gameService.viewUserGameColloct(userId);
+    public ResponseEntity<Page<Game>> viewUserGame(@NotBlank @RequestParam(value = "userId") String userId,
+                                                @NotNull @RequestParam(value = "pageSize") Integer pageSize,
+                                                @NotNull @RequestParam(value = "pageNo") Integer pageNo){
+        return gameService.viewUserGameColloct(userId, pageSize, pageNo);
     }
 
-
+    @GetMapping("search")
+    public ResponseEntity<Page<Game>> searchGame(@NotNull @RequestParam(value = "pageSize") Integer pageSize,
+                                                @NotNull @RequestParam(value = "pageNo") Integer pageNo,
+                                                @NotBlank @RequestParam(value = "gameName") String gameName){
+        return gameService.searchGame(pageSize, pageNo, gameName);                                        
+    }
 
 
 }
