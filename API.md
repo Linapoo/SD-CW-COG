@@ -181,11 +181,11 @@ http://www.cog.codes
 * Success Response
     * Status: 200
     * Content: 
-    {
-    "data": List<Game>,
-    "pageSize": [Integer],
-    "pageNo": [Integer],
-    "totalPage": [Integer]
+    {\
+    "data": List<Game>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
     }
 * Error Response
     * Status: 500
@@ -237,7 +237,7 @@ http://www.cog.codes
 * Note: 
     * call with same user and game twice will still get Success Response(will be fixed)
 
-**ViewUserGame**
+**View User Game**
 
 * URL: /api/game/viewUserGame
 * Method: Get
@@ -249,11 +249,11 @@ http://www.cog.codes
 * Success Response
     * Status: 200
     * Content: 
-    {
-    "data": List<Game>,
-    "pageSize": [Integer],
-    "pageNo": [Integer],
-    "totalPage": [Integer]
+    {\
+    "data": List<Game>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
     }
 * Error Response
     * Status: 500
@@ -270,11 +270,11 @@ http://www.cog.codes
 * Success Response
     * Status: 200
     * Content: 
-    {
-    "data": List<Game>,
-    "pageSize": [Integer],
-    "pageNo": [Integer],
-    "totalPage": [Integer]
+    {\
+    "data": List<Game>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
     }
 * Error Response
     * Status: 500
