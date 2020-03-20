@@ -1,24 +1,17 @@
 package com.group13.cog.model;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 /**
- * Created by Yiran on 2020/2/26.
+ * Created by Yiran on 2020/3/18.
  */
-
-@Document("user")
-public class User {
+public class FriendRequest {
     @Id
     private String id;
 
     private String userName;
-
-    private String pwd;
 
     private String email;
 
@@ -31,26 +24,9 @@ public class User {
 
     private Integer age;
 
-    @DBRef
-    private List<Game> games;
+    private LocalDateTime requestTime;
 
-    public User(String userName, String email, String avatar, String city, Integer gender, Integer age) {
-        this.userName = userName;
-        this.email = email;
-        this.avatar = avatar;
-        this.city = city;
-        this.gender = gender;
-        this.age = age;
-    }
-
-    @JsonIgnore
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
+    private String requestMsg;
 
     public String getId() {
         return id;
@@ -68,15 +44,6 @@ public class User {
         this.userName = userName;
     }
 
-    @JsonIgnore
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -84,12 +51,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-<<<<<<< HEAD
-    
-    @JsonIgnore
-=======
 
->>>>>>> origin/dev_yl
     public String getAvatar() {
         return avatar;
     }
@@ -120,5 +82,21 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public LocalDateTime getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(LocalDateTime requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public String getRequestMsg() {
+        return requestMsg;
+    }
+
+    public void setRequestMsg(String requestMsg) {
+        this.requestMsg = requestMsg;
     }
 }

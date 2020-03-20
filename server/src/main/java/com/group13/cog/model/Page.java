@@ -24,10 +24,10 @@ public class Page<T> {
     }
 
     public Page(List<T> data, int pageSize, int pageNo){
-        int totalPage = (int) Math.ceil((double) data.size()/pageSize);
-        int start = pageSize*(pageNo-1)>=data.size()? data.size():pageSize*(pageNo-1);
-        int end = pageSize*pageNo >= data.size()? data.size():pageSize*pageNo;
-        this.setData(data.subList(start, end));
+        int totalPage = (data == null)? 0 : (int) Math.ceil((double) data.size()/pageSize);
+        int start = (data == null)? 0 : (pageSize*(pageNo-1)>=data.size()? data.size():pageSize*(pageNo-1));
+        int end = (data == null)? 0 : (pageSize*pageNo >= data.size()? data.size():pageSize*pageNo);
+        this.setData((data == null)? null : data.subList(start, end));
         this.setPageSize(pageSize);
         this.setPageNo(pageNo);
         this.setTotalPage(totalPage);
