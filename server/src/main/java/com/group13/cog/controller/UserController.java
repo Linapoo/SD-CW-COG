@@ -2,7 +2,6 @@ package com.group13.cog.controller;
 
 import com.group13.cog.utils.FileStorage;
 import com.group13.cog.model.User;
-import com.group13.cog.service.StorageService;
 import com.group13.cog.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Files;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,10 +29,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    StorageService storageService;
-    
-    FileStorage filestorage= new FileStorage("upload-files/User");
+    FileStorage filestorage= new FileStorage("upload-files/user");
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)

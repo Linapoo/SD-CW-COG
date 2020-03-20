@@ -84,12 +84,8 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-<<<<<<< HEAD
     
     @JsonIgnore
-=======
-
->>>>>>> origin/dev_yl
     public String getAvatar() {
         return avatar;
     }
