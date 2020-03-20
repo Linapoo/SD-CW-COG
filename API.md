@@ -280,8 +280,56 @@ http://www.cog.codes
     * Status: 500
 * Note:
     * This will return all game which gameName include this gameName[String]
-<<<<<<< HEAD
-=======
+    
+**Upload Game Image**
+
+* URL: /api/game/updateImage
+* Method: Post
+* Parameters
+    * Required: 
+        * gameId=[String]
+        * image=[Multipart]
+* Success Response
+    * Status: 200
+    * Content: 1 
+* Error Response
+    * Status: 500
+
+**Get Game Image**
+
+* URL: /api/game/getImage
+* Method: Get
+* Parameters
+    * Required: 
+        * gameId=[String]
+* Success Response
+    * Status: 200
+    * Content: {Image} 
+* Error Response
+    * Status: 500
+
+**Update Game Information**
+
+* URL: /api/user/updateGameInfo
+* Method: PUT
+* Parameters
+    * Required: 
+        * gameId=[String]
+    * Optional:
+        * gameName=[String]
+        * publisher=[String]
+        * description=[String]
+        * artist=[String]
+        * designer=[String] 
+        * timePerRound=[Integer]
+        * year=[Integer]
+        * playerAge=[Integer]
+* Success Response
+    * Status: 200
+    * Content: {Game}
+* Error Response
+    * Status: 200
+    * Content: null
 
 ## Friendship Controller
 
@@ -420,60 +468,8 @@ http://www.cog.codes
     * Status: 200
     * Content: 0
 
-## To Do List
->>>>>>> origin/dev_yl
 
 
-**Upload Game Image**
 
-* URL: /api/game/updateImage
-* Method: Post
-* Parameters
-    * Required: 
-        * gameId=[String]
-        * image=[Multipart]
-* Success Response
-    * Status: 200
-    * Content: 1 
-* Error Response
-    * Status: 500
 
-**Get Game Image**
-
-* URL: /api/game/getImage
-* Method: Get
-* Parameters
-    * Required: 
-        * gameId=[String]
-* Success Response
-    * Status: 200
-    * Content: {Image} 
-* Error Response
-    * Status: 500
-
-**Update Game Information**
-
-* URL: /api/user/updateGameInfo
-* Method: PUT
-* Parameters
-    * Required: 
-        * gameId=[String]
-    * Optional:
-        * gameName=[String]
-        * publisher=[String]
-        * description=[String]
-        * artist=[String]
-        * designer=[String] 
-        * timePerRound=[Integer]
-        * year=[Integer]
-        * playerAge=[Integer]
-* Success Response
-    * Status: 200
-    * Content: {Game}
-* Error Response
-    * Status: 200
-    * Content: null
-
-## To Do List
-* build API for Review and Sell
 
