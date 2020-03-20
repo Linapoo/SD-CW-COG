@@ -280,6 +280,144 @@ http://www.cog.codes
     * Status: 500
 * Note:
     * This will return all game which gameName include this gameName[String]
+
+## Friendship Controller
+
+**Friendship Entity**
+
+{\
+    "id": [String],\
+    "userId": [ObjectId],\
+    "friendId": [ObjectId],\
+    "status": [Integer],\
+    "requestTime": [Date],\
+    "acceptTime": [Date],\
+    "requestMsg": [String]\
+}
+
+**FriendRequest Entity**
+
+{\
+    "id": [String],\
+    "userName": [String],\
+    "email": [String],\
+    "avatar": [String],\
+    "city": [String],\
+    "gender": [Integer],\
+    "age": [Integer],\
+    "requestTime": [Date],\
+    "requestMsg": [String]\
+}
+
+**Send a friend request**
+
+* URL: /api/friendship/sendFriendRequest
+* Method: POST
+* Parameters
+    * Required: 
+        * senderId=[String]
+        * receiverId=[String]
+    * Optional:
+        * message=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content: 0
+
+**Get friend requests**
+
+* URL: /api/friendship/getFriendRequests
+* Method: GET
+* Parameters
+    * Required: 
+        * userId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<FriendRequest\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+
+**Accept a friend request**
+
+* URL: /api/friendship/acceptFriendship
+* Method: POST
+* Parameters
+    * Required: 
+        * userId=[String]
+        * friendId=[String]
+* Success Response
+    * Status: 200
+    * Content:1
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content: 0
+
+**Get users' friends**
+
+* URL: /api/friendship/myFriends
+* Method: GET
+* Parameters
+    * Required: 
+        * userId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<User\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+
+**Delete a friend**
+
+* URL: /api/friendship/delete
+* Method: DELETE
+* Parameters
+    * Required: 
+        * userId=[String]
+        * friendId=[String]
+* Success Response
+    * Status: 200
+    * Content:1
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content: 0
+
 ## To Do List
 
 * finish Game Image API(may also update User Avatar API)
