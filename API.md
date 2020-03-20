@@ -113,7 +113,7 @@ http://www.cog.codes
 * Method: GET
 * Parameters
     * Required: 
-        * filename=[String]
+        * uid=[String]
 * Success Response
     * Status: 200
     * Content: {Image}
@@ -280,25 +280,23 @@ http://www.cog.codes
     * Status: 500
 * Note:
     * This will return all game which gameName include this gameName[String]
-## To Do List
 
-* finish Game Image API(may also update User Avatar API)
-* build API for Review and Sell
 
-~~**Upload Game Image**~~(not finish)
+**Upload Game Image**
 
-* URL: /api/game/uploadImage
+* URL: /api/game/updateImage
 * Method: Post
 * Parameters
     * Required: 
         * gameId=[String]
+        * image=[Multipart]
 * Success Response
     * Status: 200
     * Content: 1 
 * Error Response
     * Status: 500
 
-~~**Get Game Image**~~(not finish)
+**Get Game Image**
 
 * URL: /api/game/getImage
 * Method: Get
@@ -311,7 +309,7 @@ http://www.cog.codes
 * Error Response
     * Status: 500
 
-~~**Update Game Information**~~(not finish)
+**Update Game Information**
 
 * URL: /api/user/updateGameInfo
 * Method: PUT
@@ -333,4 +331,7 @@ http://www.cog.codes
 * Error Response
     * Status: 200
     * Content: null
+
+## To Do List
+* build API for Review and Sell
 

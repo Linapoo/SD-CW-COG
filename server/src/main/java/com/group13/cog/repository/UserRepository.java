@@ -4,6 +4,8 @@ import com.group13.cog.exception.DataDuplicateException;
 import com.group13.cog.exception.DataNotFoundException;
 import com.group13.cog.model.User;
 import com.mongodb.client.result.UpdateResult;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -62,7 +64,12 @@ public class UserRepository {
      * @return A user model including the user information
      */
     public User findById(String id) {
-        return mongoTemplate.findById(id, User.class);
+        User user = mongoTemplate.findById(new ObjectId(id), User.class);
+        if(user != null){
+            return user;
+        }else{
+            throw new DataNotFoundException(String.format("The user id not exists"));
+        }
     }
 
     /**

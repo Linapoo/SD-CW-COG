@@ -1,7 +1,5 @@
 package com.group13.cog.service.impl;
 
-import java.util.List;
-
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.repository.GameRepository;
@@ -60,6 +58,11 @@ public class GameServiceImpl implements GameService {
     @Override
     public ResponseEntity<Page<Game>> searchGame(Integer pageSize, Integer pageNo, String gameName){
         return new ResponseEntity<>(gameRepository.findByName(pageSize, pageNo, gameName), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Game> update(Game game) {
+        return new ResponseEntity<>(gameRepository.update(game),HttpStatus.OK);
     }
 
 

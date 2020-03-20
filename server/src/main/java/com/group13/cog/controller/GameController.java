@@ -1,17 +1,19 @@
 package com.group13.cog.controller;
 
+import com.group13.cog.utils.FileStorage;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
-import com.group13.cog.service.StorageService;
 import com.group13.cog.service.GameService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.util.StringUtils;
+import org.springframework.core.io.Resource;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,8 +30,7 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-    @Autowired
-    StorageService storageService;
+    FileStorage filestorage= new FileStorage("upload-files/game");
 
     @PostMapping("publish")
     @ResponseStatus(HttpStatus.CREATED)
@@ -87,5 +88,42 @@ public class GameController {
         return gameService.searchGame(pageSize, pageNo, gameName);                                        
     }
 
+    @PutMapping("updateGameInfo")
+    public ResponseEntity<Game> update(@NotBlank @RequestParam(value = "gameId") String gameId,
+                                    @RequestParam(value = "gameName",required = false) String gameName,
+                                    @RequestParam(value = "publisher", required = false) String publisher,
+                                    @RequestParam(value = "description", required = false) String description,
+                                    @RequestParam(value = "artist", required = false) String artist,
+                                    @RequestParam(value = "designer", required = false) String designer,
+                                    @RequestParam(value = "timePerRound", required = false) Integer timePerRound,
+                                    @RequestParam(value = "year", required = false) Integer year,
+                                    @RequestParam(value = "playerAge", required = false) Integer playerAge){
+        Game game = new Game(gameName, publisher, artist, designer, description, timePerRound, year, playerAge);
+        game.setId(gameId);
+        return gameService.update(game);                                  
+    }
+
+    @PostMapping("updateImage")
+    public Integer updateImage(@NotBlank @RequestParam(value = "gameId") String gameId,
+                            @NotNull @RequestParam(value = "image") MultipartFile image){
+        String filename = StringUtils.cleanPath(image.getOriginalFilename());
+        filename = gameId + filename.substring(filename.indexOf("."));
+        Game game = gameService.viewGame(gameId).getBody();
+        if (!StringUtils.isEmpty(game.getImage())){
+            filestorage.delete(game.getImage());
+        }
+        game.setImage(filename);
+        filestorage.store(image, filename);
+        return gameService.update(game) == null? null: 1;
+    }
+
+    @GetMapping("getImage")
+    public ResponseEntity<Resource> viewImage(@NotBlank @RequestParam(value = "gameId") String gameId){
+        Game game = gameService.viewGame(gameId).getBody();
+        Resource resource = filestorage.loadAsResource(game.getImage());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+    }
 
 }

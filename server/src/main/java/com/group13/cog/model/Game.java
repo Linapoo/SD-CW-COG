@@ -1,5 +1,7 @@
 package com.group13.cog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -28,6 +30,8 @@ public class Game {
 
     private Integer playerAge;
 
+    private String image;
+
     public Game(String gameName, String publisher, String artist, String designer, String description, Integer timePerRound,
             Integer year, Integer playerAge) {
         this.setGameName(gameName);
@@ -40,6 +44,18 @@ public class Game {
         this.setPlayerAge(playerAge);
     }
 
+    public void setImage(String image){
+        this.image = image;
+    }
+
+    @JsonIgnore
+    public String getImage(){
+        return image;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
     public String getId(){
         return id;
     }

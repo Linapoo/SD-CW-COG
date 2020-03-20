@@ -26,12 +26,29 @@ import java.nio.file.StandardCopyOption;
 public class StorageServiceImpl implements StorageService {
 
     private final Path rootLocation;
-
+    
     @Autowired
     public StorageServiceImpl() {
-        this.rootLocation = Paths.get("upload-files");
+        this.rootLocation = Paths.get("upload-files/avatar");
+        initDir(this.rootLocation);
     }
 
+    private void initDir(Path path){
+        if(!Files.exists(path)){
+            try{
+                Files.createDirectories(path);
+            }catch(IOException e){
+                throw new StorageException("Failed to make directories " + path, e);
+            }
+        }
+    }
+    /**@Override
+    public void storeImage(MultipartFile file, String filename, String oldname){
+        
+    } 
+    @Override
+    public void delete(String filename)
+**/
     @Override
     public void store(MultipartFile file) {
         store(file, null);

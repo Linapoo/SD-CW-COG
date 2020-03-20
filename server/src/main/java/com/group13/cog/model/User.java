@@ -83,6 +83,7 @@ public class User {
         this.email = email;
     }
     
+    @JsonIgnore
     public String getAvatar() {
         return avatar;
     }

@@ -1,8 +1,10 @@
 package com.group13.cog.controller;
 
+import com.group13.cog.utils.FileStorage;
 import com.group13.cog.model.User;
 import com.group13.cog.service.StorageService;
 import com.group13.cog.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -30,6 +34,8 @@ public class UserController {
 
     @Autowired
     StorageService storageService;
+    
+    FileStorage filestorage= new FileStorage("upload-files/User");
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -74,17 +80,23 @@ public class UserController {
     }
 
     @PostMapping("updateAvatar")
-    public String updateAvatar(@NotBlank @RequestParam(value = "uid") String uid,
+    public Integer updateAvatar(@NotBlank @RequestParam(value = "uid") String uid,
                                @NotNull @RequestParam(value = "avatar") MultipartFile avatar) {
         String filename = StringUtils.cleanPath(avatar.getOriginalFilename());
-        filename = "avatar_" + uid + filename.substring(filename.indexOf('.'));
-        storageService.store(avatar, filename);
-        return userService.updateAvatar(uid, filename);
+        filename = uid + filename.substring(filename.indexOf('.'));
+        User user = userService.findbyId(uid).getBody();
+        if (!StringUtils.isEmpty(user.getAvatar())){
+            filestorage.delete(user.getAvatar());
+        }
+        user.setAvatar(filename);
+        filestorage.store(avatar, filename);
+        return userService.updateUserInfo(user) == null? null:1;
     }
 
     @GetMapping(value = "getAvatar")
-    public ResponseEntity<Resource> getAvatar(@NotBlank @RequestParam(value = "filename") String filename) {
-        Resource resource = storageService.loadAsResource(filename);
+    public ResponseEntity<Resource> getAvatar(@NotBlank @RequestParam(value = "uid") String uid) {
+        User user = userService.findbyId(uid).getBody();
+        Resource resource = filestorage.loadAsResource(user.getAvatar());
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);

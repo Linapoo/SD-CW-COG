@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
         User userRes = userRepository.updateUserInfo(user);
         return userRes == null ? null : userRes.getAvatar();
     }
+
+    @Override
+    public ResponseEntity<User> findbyId(String uid) {
+        return new ResponseEntity<>(userRepository.findById(uid),HttpStatus.OK);
+    }
 }

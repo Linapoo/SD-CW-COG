@@ -1,7 +1,5 @@
 package com.group13.cog.service;
 
-import java.util.List;
-
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 
@@ -84,4 +82,10 @@ public interface GameService {
      */
     ResponseEntity<Page<Game>> searchGame(Integer pageSize, Integer pageNo, String gameName);
 
+    /**
+     * update game info
+     * @param game
+     * @return game updated 
+     */
+    ResponseEntity<Game> update(Game game);
 }

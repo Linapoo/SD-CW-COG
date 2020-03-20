@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-
+import org.springframework.util.StringUtils;
 
 /**
  * Created by Ying on 2020/3/4.
@@ -102,7 +102,7 @@ public class GameRepository {
      * Delete a game from user game collection
      * @param userId
      * @param gameId
-     * @return 1 sucuess or throw DataNotFoundException if the gameId not exits in user collection
+     * @return 1 success or throw DataNotFoundException if the gameId not exits in user collection
      */
     public int deleteGameToUser(String userId, String gameId){
         Query query = new Query();
@@ -154,7 +154,7 @@ public class GameRepository {
      * @param pageNo The number of page
      * @return A user model including the user information
      */
-     public Page<Game> findByName(Integer pageSize, Integer pageNo, String GameName){
+    public Page<Game> findByName(Integer pageSize, Integer pageNo, String GameName){
         Query query = new Query();
         query.addCriteria(Criteria.where("gameName").regex(GameName));
         int totalPage = (int) Math.ceil((double)mongoTemplate.count(query, Game.class)/pageSize);
@@ -169,4 +169,34 @@ public class GameRepository {
         }
     }
 
+    /**
+     * update a game info
+     * @param Game The game model
+     * @return Game updated if success or throw DataNotFoundExcepton if the gameId not exits
+     */
+    public Game update(Game game){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(game.getId()));
+
+        Update update = new Update();
+        if (!StringUtils.isEmpty(game.getGameName()))
+            update.set("gameName", game.getGameName());
+        if (!StringUtils.isEmpty(game.getArtist()))
+            update.set("artist", game.getArtist());
+        if (!StringUtils.isEmpty(game.getDesigner()))
+            update.set("designer", game.getDesigner());
+        if (!StringUtils.isEmpty(game.getDescription()))
+            update.set("description", game.getDescription());
+        if (!StringUtils.isEmpty(game.getImage()))
+            update.set("image", game.getImage());    
+        if (game.getTimePerRound() != null)
+            update.set("timePerRound", game.getTimePerRound());
+        if (game.getYear() != null)
+            update.set("year", game.getYear());
+        if (game.getPlayerAge() != null)
+            update.set("playerAge", game.getPlayerAge());
+
+        mongoTemplate.updateFirst(query, update, Game.class);
+        return findById(game.getId());
+    }
 }

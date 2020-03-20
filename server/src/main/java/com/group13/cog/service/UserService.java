@@ -55,4 +55,11 @@ public interface UserService {
      * @return Return avatar filename if success, otherwise return null
      */
     String updateAvatar(String uid, String filename);
+
+    /**
+     * find a user by Id
+     * @param uid
+     * @return Return a user model to the client if success, or throw {@link com.group13.cog.exception.DataNotFoundException}
+     */
+    ResponseEntity<User> findbyId(String uid);
 }
