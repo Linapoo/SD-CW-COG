@@ -1,4 +1,4 @@
-package com.group13.cog.model;
+package com.group13.cog.model.response;
 
 import org.springframework.data.annotation.Id;
 

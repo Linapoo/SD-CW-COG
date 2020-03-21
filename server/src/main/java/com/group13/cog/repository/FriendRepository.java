@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.group13.cog.exception.DataDuplicateException;
 import com.group13.cog.exception.DataNotFoundException;
-import com.group13.cog.model.FriendRequest;
+import com.group13.cog.model.response.FriendRequest;
 import com.group13.cog.model.Friendship;
 
 import com.group13.cog.model.Page;

@@ -1,6 +1,6 @@
 package com.group13.cog.controller;
 
-import com.group13.cog.model.FriendRequest;
+import com.group13.cog.model.response.FriendRequest;
 import com.group13.cog.model.Friendship;
 import com.group13.cog.model.Page;
 import com.group13.cog.model.User;
