@@ -72,6 +72,27 @@ http://www.cog.codes
     * Status: 200
     * Content: null
 
+**Get A User Information**
+
+* URL: /api/user/getUserInfo
+* Method: GET
+* Parameters
+    * Required: 
+        * uid=[String]
+        * targetId=[String]
+* Success Response
+    * Status: 200
+    * Content: 
+    {\
+        "user": [User],\
+        "isFriend": [Integer]\
+    }
+* Error Response
+    * Status: 500
+* Note: 
+    * uid = The user who is getting the information
+    * targetId = The user whose information will be fetched
+
 **Reset Password**
 
 * URL: /api/user/resetPwd

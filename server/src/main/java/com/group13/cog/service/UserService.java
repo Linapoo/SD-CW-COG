@@ -1,6 +1,8 @@
 package com.group13.cog.service;
 
+import com.group13.cog.exception.DataNotFoundException;
 import com.group13.cog.model.User;
+import com.group13.cog.model.response.UserInfoResp;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -12,7 +14,7 @@ public interface UserService {
      * User register
      *
      * @param user The user model
-     * @return Return a user model to the client if success, 
+     * @return Return a user model to the client if success,
      * otherwise throw {@link com.group13.cog.exception.DataDuplicateException}
      */
     User signUp(User user);
@@ -58,8 +60,19 @@ public interface UserService {
 
     /**
      * find a user by Id
+     *
      * @param uid
      * @return Return a user model to the client if success, or throw {@link com.group13.cog.exception.DataNotFoundException}
      */
     ResponseEntity<User> findbyId(String uid);
+
+    /**
+     * Get the information of a user
+     *
+     * @param uid      The user who is getting the information
+     * @param targetId The user whose information will be fetched
+     * @return Return a {@link UserInfoResp} model if success, throw {@link DataNotFoundException} if the target
+     * user does not exist.
+     */
+    ResponseEntity<UserInfoResp> getUserInfo(String uid, String targetId);
 }

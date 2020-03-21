@@ -2,7 +2,9 @@ package com.group13.cog.repository;
 
 import com.group13.cog.exception.DataDuplicateException;
 import com.group13.cog.exception.DataNotFoundException;
+import com.group13.cog.model.Friendship;
 import com.group13.cog.model.User;
+import com.group13.cog.model.response.UserInfoResp;
 import com.mongodb.client.result.UpdateResult;
 
 import org.bson.types.ObjectId;
@@ -22,6 +24,9 @@ public class UserRepository {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
     /**
      * Add a new user.
@@ -65,10 +70,10 @@ public class UserRepository {
      */
     public User findById(String id) {
         User user = mongoTemplate.findById(new ObjectId(id), User.class);
-        if(user != null){
+        if (user != null) {
             return user;
-        }else{
-            throw new DataNotFoundException(String.format("The user id not exists"));
+        } else {
+            throw new DataNotFoundException(String.format("The user <%s> not exists", id));
         }
     }
 
@@ -122,5 +127,27 @@ public class UserRepository {
 
         UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
         return result.getModifiedCount() > 0 ? 1 : 0;
+    }
+
+    /**
+     * Get the information of a user
+     *
+     * @param uid      The user who is getting the information
+     * @param targetId The user whose information will be fetched
+     * @return Return a {@link UserInfoResp} model if success, throw {@link DataNotFoundException} if the target
+     * user does not exist.
+     */
+    public UserInfoResp getUserInformation(ObjectId uid, ObjectId targetId) {
+        UserInfoResp userInfoResp = new UserInfoResp();
+
+        User user = findById(targetId.toHexString());
+        if (user == null)
+            throw new DataNotFoundException(String.format("The user <%s> does not exist.", targetId.toHexString()));
+
+        Friendship friendship = friendRepository.findFriendById(uid, targetId);
+
+        userInfoResp.setUser(user);
+        userInfoResp.setIsFriend(friendship == null ? 0 : 1);
+        return userInfoResp;
     }
 }
