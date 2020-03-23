@@ -489,8 +489,189 @@ http://www.cog.codes
     * Status: 200
     * Content: 0
 
+## Club Controller
 
+**Club Entity**
 
+{\
+    "id": [String],\
+    "clubName": [String],\
+    "city": [String],\
+    "announcement": [String],\
+    "founderId": [ObjectId]\
+}
 
+**UserClub Entity**
 
+{\
+    "id": [String],\
+    "clubId": [ObjectId],\
+    "userId": [ObjectId],\
+    "joinTime": [Date]\
+}
 
+**UserClubResp Entity**
+
+{\
+    "id": [String],\
+    "clubName": [String],\
+    "city": [String],\
+    "announcement": [String],\
+    "founderId": [ObjectId],\
+    "joinTime": [Date]\
+}
+
+**Create a club**
+
+* URL: /api/club/create
+* Method: POST
+* Parameters
+    * Required: 
+        * clubName=[String]
+        * city=[String]
+        * founderId=[String]
+    * Optional:
+        * announcement=[String]
+* Success Response
+    * Status: 201
+    * Content: 1
+* Error Response
+    * Status: 500
+
+**Delete a club**
+
+* URL: /api/club/delete
+* Method: DELETE
+* Parameters
+    * Required: 
+        * clubId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 200
+    * Content: 0\
+    Or
+    * Status: 500
+
+**Join a club**
+
+* URL: /api/club/userJoinClub
+* Method: POST
+* Parameters
+    * Required: 
+        * userId=[String]
+        * clubId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 200
+    * Content: 0\
+    Or
+    * Status: 500
+
+**Quit a club**
+
+* URL: /api/club/userQuitClub
+* Method: DELETE
+* Parameters
+    * Required: 
+        * userId=[String]
+        * clubId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 200
+    * Content: 0\
+    Or
+    * Status: 500
+
+**Get users' clubs**
+
+* URL: /api/club/getUserClubs
+* Method: GET
+* Parameters
+    * Required: 
+        * userId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<UserClubResp\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+
+**Search clubs**
+
+* URL: /api/club/search
+* Method: GET
+* Parameters
+    * Required: 
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+    * Optional: 
+        * clubName=[String]
+        * city=[String]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<Club\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+
+**Get club members**
+
+* URL: /api/club/getClubMembers
+* Method: GET
+* Parameters
+    * Required: 
+        * clubId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<User\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
