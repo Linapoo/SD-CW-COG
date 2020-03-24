@@ -6,6 +6,8 @@ import com.group13.cog.model.User;
 import com.group13.cog.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,21 +36,17 @@ public class UserController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User signUp(@NotBlank @RequestParam(value = "userName") String userName,
-                      @NotBlank @RequestParam(value = "password") String pwd,
-                      @RequestParam(value = "email", required = false) String email,
-                      @RequestParam(value = "city", required = false) String city,
-                      @RequestParam(value = "gender", required = false) Integer gender,
-                      @RequestParam(value = "age", required = false) Integer age) {
-        User user = new User(userName, email, null, city, gender, age);
-        user.setPwd(pwd);
+    public User signUp(@NotBlank @RequestBody String registerInfo) throws JSONException {
+        JSONObject register = new JSONObject(registerInfo);
+        User user = new User(register.getString("userName"), register.getString("email"), null, register.getString("city"), register.optInt("gender"), register.optInt("age"));
+        user.setPwd(register.getString("password"));
         return userService.signUp(user);
     }
 
     @PostMapping("login")
-    public ResponseEntity<User> signIn(@NotBlank @RequestParam(value = "userName") String userName,
-                                       @NotBlank @RequestParam(value = "password") String pwd) {
-        return userService.signIn(userName, pwd);
+    public ResponseEntity<User> signIn(@NotBlank @RequestBody String loginInfo) throws JSONException {
+        JSONObject login = new JSONObject(loginInfo);
+        return userService.signIn(login.getString("userName"), login.getString("password"));
     }
 
     @PutMapping("updateUserInfo")
