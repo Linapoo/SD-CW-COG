@@ -22,15 +22,16 @@ http://www.cog.codes
 
 * URL: /api/user/register
 * Method: POST
-* Parameters
-    * Required: 
-        * userName=[String]
-        * password=[String]
-    * Optional:
-        * email=[String]
-        * city=[String]
-        * gender=[Integer] (0 male, 1 female)
-        * age=[Integer]
+* RequestBody
+{\
+    "id": [String],\
+    "userName": [String],\
+    "password": [String],\
+    "email": [String],\
+    "city": [String],\
+    "gender": [Integer],\
+    "age": [Integer]\
+}
 * Success Response
     * Status: 200
     * Content: {User}
@@ -41,10 +42,11 @@ http://www.cog.codes
 
 * URL: /api/user/login
 * Method: POST
-* Parameters
-    * Required: 
-        * userName=[String]
-        * password=[String]
+* RequestBody
+{\
+    "userName": [String],\
+    "password": [String],\
+}
 * Success Response
     * Status: 200
     * Content: {User}
