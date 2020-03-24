@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
     public User signUp(@NotBlank @RequestParam(value = "userName") String userName,
-                      @NotBlank @RequestBody String pwd,
+                      @NotBlank @RequestParam(value = "password") String pwd,
                       @RequestParam(value = "email", required = false) String email,
                       @RequestParam(value = "city", required = false) String city,
                       @RequestParam(value = "gender", required = false) Integer gender,
@@ -47,7 +47,7 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<User> signIn(@NotBlank @RequestParam(value = "userName") String userName,
-                                       @NotBlank @RequestBody String pwd) {
+                                       @NotBlank @RequestParam(value = "password") String pwd) {
         return userService.signIn(userName, pwd);
     }
 
