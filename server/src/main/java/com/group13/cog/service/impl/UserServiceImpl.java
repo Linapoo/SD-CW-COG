@@ -1,8 +1,10 @@
 package com.group13.cog.service.impl;
 
 import com.group13.cog.model.User;
+import com.group13.cog.model.response.UserInfoResp;
 import com.group13.cog.repository.UserRepository;
 import com.group13.cog.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +51,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<User> findbyId(String uid) {
-        return new ResponseEntity<>(userRepository.findById(uid),HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findById(uid), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<UserInfoResp> getUserInfo(String uid, String targetId) {
+        return new ResponseEntity<>(userRepository.getUserInformation(new ObjectId(uid), new ObjectId(targetId)),
+                HttpStatus.OK);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.group13.cog.exception.DataDuplicateException;
 import com.group13.cog.exception.DataNotFoundException;
-import com.group13.cog.model.FriendRequest;
+import com.group13.cog.model.response.FriendRequest;
 import com.group13.cog.model.Friendship;
 
 import com.group13.cog.model.Page;
@@ -160,64 +160,21 @@ public class FriendRepository {
 
         List<User> friends = mongoTemplate.aggregate(aggregation, "user", User.class)
                 .getMappedResults();
-        return new Page<>(friends, pageSize, pageNo, friends.size());
+        return new Page<>(friends, pageSize, pageNo);
     }
 
-//    /**
-//     * Find a friend by id from user's friend collection.
-//     *
-//     * @param friendId The user id of the friend
-//     * @return the friend's user information
-//     */
-//    public Friend findByIdToUser(String friendId) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("friendId").is(friendId));
-//        return mongoTemplate.findone(query, User.class);
-//    }
-//
-//    /**
-//     * Find a friend by name from user's friend collection.
-//     *
-//     * @param friendName The user name of the friend
-//     * @return the friend's user information
-//     */
-//    public Friend findByNameToUser(String friendName) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("friendName").is(friendName));
-//        return mongoTemplate.findone(query, User.class);
-//    }
-//
-//    /**
-//     * Find a friend by name from all users.
-//     *
-//     * @param FriendName The name of the friend
-//     * @return the friend's user information
-//     */
-//    public Friend findByName(String friendName) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("userName").is(friendName));
-//        User friendRes = mongoTemplate.findone(query, User.class);
-//        if (friendRes != null) {
-//            return friendRes;
-//        } else {
-//            throw new DataDuplicateException(String.format("The friend name <%s> does not exits.", friendName));
-//        }
-//    }
-//
-//    /**
-//     * Find a friend by id from all users.
-//     *
-//     * @param friendId The id of the friend
-//     * @return the friend's user information
-//     */
-//    public Friend findById(String friendId) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("id").is(friendId));
-//        User friendRes = mongoTemplate.findone(query, User.class);
-//        if (friendRes != null) {
-//            return friendRes;
-//        } else {
-//            throw new DataDuplicateException(String.format("The friend id <%s> does not exits.", friendId));
-//        }
-//    }
+    /**
+     * Find a built friendship of a user.
+     *
+     * @param userId   The current user
+     * @param friendId The friend id
+     * @return Return a {@link Friendship} if find, otherwise null
+     */
+    public Friendship findFriendById(ObjectId userId, ObjectId friendId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("friendId").is(friendId));
+        query.addCriteria(Criteria.where("status").is(1));
+        return mongoTemplate.findOne(query, Friendship.class);
+    }
 }
