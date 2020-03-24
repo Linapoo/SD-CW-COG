@@ -53,8 +53,12 @@ public class UserRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("userName").is(userName));
         query.addCriteria(Criteria.where("pwd").is(pwd));
-
-        return mongoTemplate.findOne(query, User.class);
+        User user = mongoTemplate.findOne(query, User.class);
+        if (user != null){
+            return user;
+        }else{
+            throw new DataNotFoundException(String.format("The userName or the password not correct"));
+        }
     }
 
     /**
