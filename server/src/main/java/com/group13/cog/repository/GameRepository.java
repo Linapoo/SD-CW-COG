@@ -28,10 +28,13 @@ public class GameRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private ForumRepository forumRepository;
+
     /**
      * Add a new game to game collection.
      *
-     * @param Game The game model
+     * @param game The game model
      * @return 1 success, otherwise throw {@link DataDuplicateException}
      */
     public int addNewGame(Game game) {
@@ -40,6 +43,10 @@ public class GameRepository {
         Game gameRes = mongoTemplate.findOne(query, Game.class);
         if (gameRes == null) {
             mongoTemplate.insert(game);
+
+            // Create the forum
+            forumRepository.createForum(game);
+
             return 1;
         } else {
             throw new DataDuplicateException(String.format("The game <%s> exits.", game.getGameName()));
@@ -171,7 +178,7 @@ public class GameRepository {
 
     /**
      * update a game info
-     * @param Game The game model
+     * @param game The game model
      * @return Game updated if success or throw DataNotFoundExcepton if the gameId not exits
      */
     public Game update(Game game){
