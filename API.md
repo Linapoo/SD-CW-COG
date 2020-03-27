@@ -677,3 +677,254 @@ http://www.cog.codes
     "pageNo": [Integer],\
     "totalPage": [Integer]\
     }
+
+## Forum Controller
+
+**Forum Entity**
+
+{\
+    "id": [String],\
+    "game": [Game],\
+    "admin": [User],\
+    "description": [String]\
+}
+
+**ForumPost Entity**
+
+{\
+    "id": [String],\
+    "title": [String],\
+    "forum": [Forum],\
+    "author": [User],\
+    "content": [String],\
+    "createTime": [Date],\
+    "sticky": [boolean],\
+    "numReply": [Integer],\
+    "finalReplyTime": [Date]\
+}
+
+**ForumReply Entity**
+
+{\
+    "id": [String],\
+    "post": [ForumPost],\
+    "content": [String],\
+    "author": [User],\
+    "replyTime": [Date],\
+    "targetReply": [ForumReply]\
+}
+
+**Get forum info**
+
+* URL: /api/forum/getForumInfo
+* Method: GET
+* Parameters
+    * Required: 
+        * gameId=[String]
+* Success Response
+    * Status: 200
+    * Content: {Forum}
+* Error Response
+    * Status: 200
+    * Content: null
+
+**Get posts**
+
+* URL: /api/forum/getPosts
+* Method: GET
+* Parameters
+    * Required: 
+        * forumId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<ForumPost\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Note
+    * The return list is ordered.
+
+**Create a post**
+
+* URL: /api/forum/createPost
+* Method: POST
+* Parameters
+    * Required: 
+        * title=[String]
+        * forumId=[String]
+        * authorId=[String]
+    * Optional:
+        * content=[String]
+        * sticky=[boolean]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+* Note
+    * Only the forum member can create a post.
+    * Only the forum administrator can create a sticky post.
+
+**Delete a post**
+
+* URL: /api/forum/deletePost
+* Method: DELETE
+* Parameters
+    * Required: 
+        * postId=[String]
+        * userId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+* Note
+    * Only the post author and forum administrator can delete a post.
+
+**Get replies**
+
+* URL: /api/forum/getReplies
+* Method: GET
+* Parameters
+    * Required: 
+        * postId=[String]
+        * pageNo=[Integer]
+        * pageSize=[Integer]
+* Success Response
+    * Status: 200
+    * Content:
+    {\
+    "data": List\<ForumReply\>,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Error Response
+    * Status: 200
+    * Content:
+    {\
+    "data": null,\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
+    }
+* Note
+    * The return list is ordered.
+
+**Add a reply**
+
+* URL: /api/forum/addReply
+* Method: POST
+* Parameters
+    * Required: 
+        * postId=[String]
+        * authorId=[String]
+        * content=[String]
+    * Optional:
+        * targetReplyId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+* Note
+    * Only the forum member can add a reply.
+    * If responding to another reply, post the replyId in targetReplyId.
+
+**Delete a reply**
+
+* URL: /api/forum/deleteReply
+* Method: DELETE
+* Parameters
+    * Required: 
+        * replyId=[String]
+        * userId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+* Note
+    * Only the reply author or forum administrator can delete a reply.
+
+**Stick a post**
+
+* URL: /api/forum/stickPost
+* Method: POST
+* Parameters
+    * Required: 
+        * postId=[String]
+        * userId=[String]
+        * stick=[boolean]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+* Note
+    * Only the forum administrator can stick a post.
+    * Set stick to true to stick the post, otherwise to unstick the post.
+
+**Join a forum**
+
+* URL: /api/forum/userJoinForum
+* Method: POST
+* Parameters
+    * Required: 
+        * forumId=[String]
+        * userId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content: 0
+
+**Quit a forum**
+
+* URL: /api/forum/userQuitForum
+* Method: DELETE
+* Parameters
+    * Required: 
+        * forumId=[String]
+        * userId=[String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500\
+    Or
+    * Status: 200
+    * Content: 0
+* Note
+    * The administrator cannot quit the forum.
+
+**Forum member check**
+
+* URL: /api/forum/isForumMember
+* Method: GET
+* Parameters
+    * Required: 
+        * forumId=[String]
+        * userId=[String]
+* Success Response
+    * Status: 200
+    * Content: true or false
+* Error Response
+    * Status: 500
