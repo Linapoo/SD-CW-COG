@@ -9,8 +9,8 @@ http://www.cog.codes
 [Friendship Controller](#friendship-controller)\
 [Club Controller](#club-controller)\
 [Forum Controller](#forum-controller)\
-[Sell Controller](#sell-controller)
-
+[Sell Controller](#sell-controller)\
+[Review Controller](#review-controller)
 
 ## User Controller
 
