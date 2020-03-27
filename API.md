@@ -4,6 +4,14 @@
 
 http://www.cog.codes
 
+[User Controller](#user-controller)\
+[Game Controller](#game-controller)\
+[Friendship Controller](#friendship-controller)\
+[Club Controller](#club-controller)\
+[Forum Controller](#forum-controller)\
+[Sell Controller](#sell-controller)
+
+
 ## User Controller
 
 **User Entity**
@@ -1048,9 +1056,9 @@ http://www.cog.codes
 * Error Response
     * Status: 500
 
-## Sell Controller
+## Review Controller
 
-**Sell Entity**
+**Review Entity**
 
 {\
     "id": [String],\
@@ -1152,7 +1160,7 @@ http://www.cog.codes
 * Error Response
     * Status: 500
 
-**Check if user has a review for a game**
+**Check if user has a Review for a game**
 * URL: /api/review/checkExist
 * Method: Get
 * Parameters
