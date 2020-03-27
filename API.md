@@ -281,6 +281,7 @@ http://www.cog.codes
 * Error Response
     * Status: 500
 
+
 **Search Game With Name**
 
 * URL: /api/game/search
@@ -353,6 +354,22 @@ http://www.cog.codes
 * Error Response
     * Status: 200
     * Content: null
+
+**Check if user own game**
+* URL: /api/game/checkOwn
+* Method: Get
+* Parameters
+    * Required: 
+        * userId=[String]
+        * gameId=[String]
+* Success Response
+    * Status: 200
+    * Content: 
+        * 1 if user owns game,
+        * 0 if not
+* Error Response
+    * Status: 500
+
 
 ## Friendship Controller
 
@@ -928,3 +945,226 @@ http://www.cog.codes
     * Content: true or false
 * Error Response
     * Status: 500
+
+## Sell Controller
+
+**Sell Entity**
+
+{\
+    "id": [String],\
+    "seller": [User],\
+    "game": [Game],\
+    "contact": [String],\
+    "price": [Double],\
+    "description": [String],\
+    "postTime": [Date]\
+}
+
+**Post a Sell**
+
+* URL: /api/sell/post
+* Method: Post
+* Parameters
+    * Required: 
+        * RequestBody:\
+        {\
+            "reviewerId" = [String],\
+            "gameId" = [String],\
+            "contact" = [String],\
+            "price" = [Double],\
+            "description" = [String]\
+        }
+* Success Response
+    * Status: 200
+    * Content: [Sell]
+* Error Response
+    * Status: 500
+
+**Delete a Sell**
+* URL: /api/sell/delete
+* Method: Delete
+* Parameters
+    * Required: 
+        sellId = [String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+
+**Update a Sell**
+* URL: /api/sell/update
+* Method: Put
+* Parameters
+    * Required: 
+       * sellId = [String]
+    * Optional:
+        * contact = [String]
+        * price = [Double]
+        * description = [String]
+* Success Response
+    * Status: 200
+    * Content: [Sell]
+* Error Response
+    * Status: 500
+
+**View a Game's Sell**
+* URL: /api/sell/viewGameSell
+* Method: Get
+* Parameters
+    * Required: 
+       * gameId = [String]
+       * pageSize = [Integer]
+       * pageNo = [Integer]
+* Success Response
+    * Status: 200
+    * Content: [Page<Sell>]
+* Error Response
+    * Status: 500
+
+**View a User's Sell**
+* URL: /api/sell/viewUserSell
+* Method: Get
+* Parameters
+    * Required: 
+       * userId = [String]
+       * pageSize = [Integer]
+       * pageNo = [Integer]
+* Success Response
+    * Status: 200
+    * Content: [Page<Sell>]
+* Error Response
+    * Status: 500
+
+**View a Sell**
+* URL: /api/sell/viewSell
+* Method: Get
+* Parameters
+    * Required: 
+       * sellId = [String]
+* Success Response
+    * Status: 200
+    * Content: [Sell]
+* Error Response
+    * Status: 500
+
+## Sell Controller
+
+**Sell Entity**
+
+{\
+    "id": [String],\
+    "reviewer": [User],\
+    "game": [Game],\
+    "content": [String],\
+    "score": [Integer],\
+    "postTime": [Date]\
+    "anonymous": [Integer](0 False, 1 True)
+}
+
+* Note: if anonymous is True, the reviewer will be null.
+
+**Post a Review**
+
+* URL: /api/review/post
+* Method: Post
+* Parameters
+    * Required: 
+        * RequestBody:\
+        {\
+        reviewerId = [String],\
+        gameId = [String],\
+        content = [String],\
+        score = [Integer],\
+        anonymous = [Integer]\
+        }
+* Success Response
+    * Status: 200
+    * Content: [Review]
+* Error Response
+    * Status: 500
+
+**Delete a Review**
+* URL: /api/review/delete
+* Method: Delete
+* Parameters
+    * Required: 
+        reviewId = [String]
+* Success Response
+    * Status: 200
+    * Content: 1
+* Error Response
+    * Status: 500
+
+**Update a Review**
+* URL: /api/review/update
+* Method: Put
+* Parameters
+    * Required: 
+       * reviewId = [String]
+    * Optional:
+        * content = [String]
+        * score = [Integer]
+        * anonymous = [Integer]
+* Success Response
+    * Status: 200
+    * Content: [Review]
+* Error Response
+    * Status: 500
+
+**View a Game's Review**
+* URL: /api/review/viewGameReview
+* Method: Get
+* Parameters
+    * Required: 
+       * gameId = [String]
+       * pageSize = [Integer]
+       * pageNo = [Integer]
+* Success Response
+    * Status: 200
+    * Content: [Page<Review>]
+* Error Response
+    * Status: 500
+
+**View a User's Reveiw**
+* URL: /api/review/viewUserReview
+* Method: Get
+* Parameters
+    * Required: 
+       * userId = [String]
+       * pageSize = [Integer]
+       * pageNo = [Integer]
+* Success Response
+    * Status: 200
+    * Content: [Page<Review>]
+* Error Response
+    * Status: 500
+
+**View a Review**
+* URL: /api/review/viewReview
+* Method: Get
+* Parameters
+    * Required: 
+       * reviewId = [String]
+* Success Response
+    * Status: 200
+    * Content: [Review]
+* Error Response
+    * Status: 500
+
+**Check if user has a review for a game**
+* URL: /api/review/checkExist
+* Method: Get
+* Parameters
+    * Required: 
+       * gameId = [String]
+       * userId = [String]
+* Success Response
+    * Status: 200
+    * Content: 
+        * 1 if exists,
+        * 0 if not 
+* Error Response
+    * Status: 500
+
+
