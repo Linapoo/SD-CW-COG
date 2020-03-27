@@ -88,4 +88,12 @@ public interface GameService {
      * @return game updated 
      */
     ResponseEntity<Game> update(Game game);
+    
+    /**
+     * check if user own the game
+     * @param userId
+     * @param gameId
+     * @return 1 if Own, 0 not
+     */
+	int checkOwn(String userId, String gameId);
 }

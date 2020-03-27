@@ -6,6 +6,8 @@ import com.group13.cog.model.Page;
 import com.group13.cog.service.GameService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,19 +32,13 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-    FileStorage filestorage= new FileStorage("upload-files/game");
+    FileStorage filestorage = new FileStorage("upload-files/game");
 
     @PostMapping("publish")
     @ResponseStatus(HttpStatus.CREATED)
-    public int gamePublish(@NotBlank @RequestParam(value = "gameName") String gameName,
-                      @NotBlank @RequestParam(value = "publisher") String publisher,
-                      @RequestParam(value = "description", required = false) String description,
-                      @RequestParam(value = "artist", required = false) String artist,
-                      @RequestParam(value = "designer", required = false) String designer,
-                      @RequestParam(value = "timePerRound", required = false) Integer timePerRound,
-                      @RequestParam(value = "year", required = false) Integer year,
-                      @RequestParam(value = "playerAge", required = false) Integer playerAge){
-        Game game = new Game(gameName, publisher, artist, designer, description, timePerRound, year, playerAge);
+    public int gamePublish(@NotBlank @RequestBody String gameInfo) throws JSONException {
+        JSONObject gameObject = new JSONObject(gameInfo);
+        Game game = new Game(gameObject.getString("gameName"), gameObject.getString("publisher"), gameObject.getString("artist"), gameObject.getString("designer"), gameObject.getString("description"), gameObject.optInt("timePerRound"), gameObject.optInt("year"), gameObject.optInt("playerAge"));
         return gameService.gamePublish(game);
     }
 
@@ -74,6 +70,11 @@ public class GameController {
         return gameService.gameDelToUser(userId, gameId);
     }
 
+    @GetMapping("checkOwn")
+    public int checkOwn(@NotBlank @RequestParam(value = "userId") String userId,
+                        @NotBlank @RequestParam(value = "gameId") String gameId){
+        return gameService.checkOwn(userId, gameId);
+    }
     @GetMapping("viewUserGame")
     public ResponseEntity<Page<Game>> viewUserGame(@NotBlank @RequestParam(value = "userId") String userId,
                                                 @NotNull @RequestParam(value = "pageSize") Integer pageSize,
@@ -125,5 +126,6 @@ public class GameController {
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
     }
+
 
 }

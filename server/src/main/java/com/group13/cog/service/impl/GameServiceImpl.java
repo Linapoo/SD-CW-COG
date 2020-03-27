@@ -56,13 +56,18 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public ResponseEntity<Page<Game>> searchGame(Integer pageSize, Integer pageNo, String gameName){
+    public ResponseEntity<Page<Game>> searchGame(Integer pageSize, Integer pageNo, String gameName) {
         return new ResponseEntity<>(gameRepository.findByName(pageSize, pageNo, gameName), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Game> update(Game game) {
-        return new ResponseEntity<>(gameRepository.update(game),HttpStatus.OK);
+        return new ResponseEntity<>(gameRepository.update(game), HttpStatus.OK);
+    }
+
+    @Override
+    public int checkOwn(String userId, String gameId) {
+        return gameRepository.checkOwn(userId, gameId);
     }
 
 

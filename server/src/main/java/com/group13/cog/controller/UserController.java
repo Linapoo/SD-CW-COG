@@ -36,10 +36,10 @@ public class UserController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User signUp(@NotBlank @RequestBody String registerInfo) throws JSONException {
-        JSONObject register = new JSONObject(registerInfo);
-        User user = new User(register.getString("userName"), register.getString("email"), null, register.getString("city"), register.optInt("gender"), register.optInt("age"));
-        user.setPwd(register.getString("password"));
+    public User signUp(@NotBlank @RequestBody String userInfo) throws JSONException {
+        JSONObject userObject = new JSONObject(userInfo);
+        User user = new User(userObject.getString("userName"), userObject.getString("email"), null, userObject.getString("city"), userObject.optInt("gender"), userObject.optInt("age"));
+        user.setPwd(userObject.getString("password"));
         return userService.signUp(user);
     }
 

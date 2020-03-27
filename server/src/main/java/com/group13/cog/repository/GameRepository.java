@@ -86,15 +86,19 @@ public class GameRepository {
      * @return 1 success or throw DataNotFoundExcrption if gameId not exits
      */
     public int addGameToUser(String userId, String gameId){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(userId));
-        Game gameRes = mongoTemplate.findOne(Query.query(Criteria.where("id").is(gameId)), Game.class);
-        if (gameRes != null) {
-            Update update = new Update().addToSet("games", gameRes);
-            mongoTemplate.updateFirst(query, update, User.class);
-            return 1;
-        } else {
-            throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
+        if (checkOwn(userId, gameId)==0){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(userId));
+            Game gameRes = mongoTemplate.findOne(Query.query(Criteria.where("id").is(gameId)), Game.class);
+            if (gameRes != null) {
+                Update update = new Update().addToSet("games", gameRes);
+                mongoTemplate.updateFirst(query, update, User.class);
+                return 1;
+            } else {
+                throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
+            }
+        }else{
+            throw new DataDuplicateException(String.format("The game already in user collection"));
         }
     } 
     
@@ -105,15 +109,19 @@ public class GameRepository {
      * @return 1 success or throw DataNotFoundException if the gameId not exits in user collection
      */
     public int deleteGameToUser(String userId, String gameId){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(userId));
-        Game gameRes = mongoTemplate.findOne(Query.query(Criteria.where("id").is(gameId)), Game.class);
-        if (gameRes != null) {
-            Update update = new Update().pull("games", gameRes);
-            mongoTemplate.updateFirst(query, update, User.class);
-            return 1;
-        } else {
-            throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
+        if(checkOwn(userId, gameId)==1){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(userId));
+            Game gameRes = mongoTemplate.findOne(Query.query(Criteria.where("id").is(gameId)), Game.class);
+            if (gameRes != null) {
+                Update update = new Update().pull("games", gameRes);
+                mongoTemplate.updateFirst(query, update, User.class);
+                return 1;
+            } else {
+                throw new DataNotFoundException(String.format("The game id <%s> not exits.", gameId));
+            }
+        }else{
+            throw new DataDuplicateException(String.format("The game not in user collection"));
         }
     }
 
@@ -198,5 +206,23 @@ public class GameRepository {
 
         mongoTemplate.updateFirst(query, update, Game.class);
         return findById(game.getId());
+    }
+
+    /**
+     * check if user own the game
+     * @param userId
+     * @param gameId
+     * @return 1 if own, 0 if not
+     */
+    public int checkOwn(String userId, String gameId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(userId));
+        query.addCriteria(Criteria.where("games.$id").is(new ObjectId(gameId)));
+        User user = mongoTemplate.findOne(query, User.class);
+        if ( user != null){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }
