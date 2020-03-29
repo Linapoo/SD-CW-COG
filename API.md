@@ -61,9 +61,6 @@
 * [Add a reply](#Add-a-reply)
 * [Delete a reply](#Delete-a-reply)
 * [Stick a post](#Stick-a-post)
-* [Join a forum](#Join-a-forum)
-* [Quit a forum](#Quit-a-forum)
-* [Forum member check](#Forum-member-check)
 
 [Sell Controller](#sell-controller)
 * [Sell Entity](#Sell-Entity)
