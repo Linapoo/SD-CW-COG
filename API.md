@@ -492,7 +492,7 @@
     * Status: 200
     * Content: 0
 
-Get friend requests
+### Get friend requests
 
 * URL: /api/friendship/getFriendRequests
 * Method: GET

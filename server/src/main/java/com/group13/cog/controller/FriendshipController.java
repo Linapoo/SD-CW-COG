@@ -6,12 +6,15 @@ import com.group13.cog.model.Page;
 import com.group13.cog.model.User;
 import com.group13.cog.service.FriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.security.InvalidParameterException;
 
 /**
  * Created by Yiran on 2020/3/16.
@@ -26,10 +29,15 @@ public class FriendshipController {
     FriendshipService friendshipService;
 
     @PostMapping("sendFriendRequest")
-    public int requestNewFriend(@NotBlank @RequestParam(value = "senderId") String senderId,
-                                @NotBlank @RequestParam(value = "receiverId") String receiverId,
-                                @RequestParam(value = "message", required = false) String message) {
-        return friendshipService.requestNewFriend(senderId, receiverId, message);
+    public int requestNewFriend(@NotBlank @RequestBody String requestInfo) throws JSONException {
+        JSONObject jsonObject = new JSONObject(requestInfo);
+        if (!jsonObject.has("senderId") || !jsonObject.has("receiverId"))
+            throw new InvalidParameterException("senderId and receiverId cannot be null");
+
+        String message = null;
+        if (jsonObject.has("message")) message = jsonObject.getString("message");
+        return friendshipService.requestNewFriend(jsonObject.getString("senderId"),
+                jsonObject.getString("receiverId"), message);
     }
 
     @GetMapping("getFriendRequests")
@@ -40,9 +48,13 @@ public class FriendshipController {
     }
 
     @PostMapping("acceptFriendship")
-    public int acceptFriendRequest(@NotBlank @RequestParam(value = "userId") String userId,
-                                   @NotBlank @RequestParam(value = "friendId") String friendId) {
-        return friendshipService.acceptFriendRequest(userId, friendId);
+    public int acceptFriendRequest(@NotBlank @RequestBody String requestInfo) throws JSONException {
+        JSONObject jsonObject = new JSONObject(requestInfo);
+        if (!jsonObject.has("userId") || !jsonObject.has("friendId"))
+            throw new InvalidParameterException("userId and friendId cannot be null");
+
+        return friendshipService.acceptFriendRequest(jsonObject.getString("userId"),
+                jsonObject.getString("friendId"));
     }
 
     @GetMapping("myFriends")
@@ -53,9 +65,13 @@ public class FriendshipController {
     }
 
     @DeleteMapping("delete")
-    public int deleteFriend(@NotBlank @RequestParam(value = "userId") String uid,
-                            @NotBlank @RequestParam(value = "friendId") String friendId) {
-        return friendshipService.deleteFriend(uid, friendId);
+    public int deleteFriend(@NotBlank @RequestBody String deleteInfo) throws JSONException {
+        JSONObject jsonObject = new JSONObject(deleteInfo);
+        if (!jsonObject.has("userId") || !jsonObject.has("friendId"))
+            throw new InvalidParameterException("userId and friendId cannot be null");
+
+        return friendshipService.deleteFriend(jsonObject.getString("userId"),
+                jsonObject.getString("friendId"));
     }
 
     @GetMapping("recommend")
