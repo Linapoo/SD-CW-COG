@@ -248,7 +248,7 @@
 "publisher": [String],\
 "description": [String],\
 "artist": [String],\
-"designer": [Integer],\
+"designer": [String],\
 "timePerRound": [Integer],\
 "year": [Integer],\
 "playerAge": [Integer]\
