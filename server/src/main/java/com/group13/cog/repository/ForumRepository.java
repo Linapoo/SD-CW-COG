@@ -131,12 +131,10 @@ public class ForumRepository {
 
     /**
      * Create a post.
-     * Only the forum member can create a post.
      * Only the forum administrator can create a sticky post.
      *
      * @param forumPost The post model. The forumId and authorId are essential
-     * @return 1 success, otherwise throw {@link DataNotFoundException} when the forum or user does not exist,
-     * and when the user isn't the forum member.
+     * @return 1 success, otherwise throw {@link DataNotFoundException} when the forum or user does not exist
      */
     public int createPost(ForumPost forumPost) {
         Forum forum = findForumById(new ObjectId(forumPost.getForumId()));
@@ -147,8 +145,8 @@ public class ForumRepository {
         if (user == null)
             throw new DataNotFoundException(String.format("The user <%s> does not exist.", forumPost.getAuthorId()));
 
-        if (!isForumMember(forumPost.getAuthorId(), forumPost.getForumId()))
-            throw new DataNotFoundException(String.format("The user <%s> isn't the forum member.", forumPost.getAuthorId()));
+//        if (!isForumMember(forumPost.getAuthorId(), forumPost.getForumId()))
+//            throw new DataNotFoundException(String.format("The user <%s> isn't the forum member.", forumPost.getAuthorId()));
 
         forumPost.setForum(forum);
         forumPost.setAuthor(user);
@@ -211,12 +209,10 @@ public class ForumRepository {
 
     /**
      * Add a reply to a post.
-     * Only the forum member can add a reply.
      * Each time a reply added, the relevant post will reset the numReply and finalReplyTime.
      *
      * @param forumReply The reply model. The postId and authorId are essential.
-     * @return 1 success, otherwise throw {@link DataNotFoundException} when the post does not exist or the user isn't
-     * the forum member.
+     * @return 1 success, otherwise throw {@link DataNotFoundException} when the post does not exist.
      */
     public int addReply(ForumReply forumReply) {
         ForumPost post = findPostById(new ObjectId(forumReply.getPostId()));
@@ -224,8 +220,8 @@ public class ForumRepository {
             throw new DataNotFoundException(String.format("The post <%s> does not exist.", forumReply.getPostId()));
         forumReply.setPost(post);
 
-        if (!isForumMember(forumReply.getAuthorId(), post.getForum().getId()))
-            throw new DataNotFoundException(String.format("The user <%s> isn't the forum member.", forumReply.getAuthorId()));
+//        if (!isForumMember(forumReply.getAuthorId(), post.getForum().getId()))
+//            throw new DataNotFoundException(String.format("The user <%s> isn't the forum member.", forumReply.getAuthorId()));
 
         User author = userRepository.findById(forumReply.getAuthorId());
         forumReply.setAuthor(author);

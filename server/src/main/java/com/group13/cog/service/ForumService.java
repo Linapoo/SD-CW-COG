@@ -25,12 +25,10 @@ public interface ForumService {
 
     /**
      * Create a post.
-     * Only the forum member can create a post.
      * Only the forum administrator can create a sticky post.
      *
      * @param forumPost The post model. The forumId and authorId are essential
-     * @return 1 success, otherwise throw {@link DataNotFoundException} when the forum or user does not exist,
-     * and when the user isn't the forum member.
+     * @return 1 success, otherwise throw {@link DataNotFoundException} when the forum or user does not exist.
      */
     int createNewPost(ForumPost forumPost);
 
@@ -54,12 +52,10 @@ public interface ForumService {
 
     /**
      * Add a reply to a post.
-     * Only the forum member can add a reply.
      * Each time a reply added, the relevant post will reset the numReply and finalReplyTime.
      *
      * @param forumReply The reply model. The postId and authorId are essential.
-     * @return 1 success, otherwise throw {@link DataNotFoundException} when the post does not exist or the user isn't
-     * the forum member.
+     * @return 1 success, otherwise throw {@link DataNotFoundException} when the post does not exist.
      */
     int addReply(ForumReply forumReply);
 

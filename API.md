@@ -870,7 +870,6 @@ Get friend requests
 * Error Response
     * Status: 500
 * Note
-    * Only the forum member can create a post.
     * Only the forum administrator can create a sticky post.
 
 ### Delete a post
@@ -936,7 +935,6 @@ Get friend requests
 * Error Response
     * Status: 500
 * Note
-    * Only the forum member can add a reply.
     * If responding to another reply, post the replyId in targetReplyId.
 
 ### Delete a reply
@@ -972,56 +970,6 @@ Get friend requests
 * Note
     * Only the forum administrator can stick a post.
     * Set stick to true to stick the post, otherwise to unstick the post.
-
-### Join a forum
-
-* URL: /api/forum/userJoinForum
-* Method: POST
-* Parameters
-    * Required: 
-        * forumId=[String]
-        * userId=[String]
-* Success Response
-    * Status: 200
-    * Content: 1
-* Error Response
-    * Status: 500\
-    Or
-    * Status: 200
-    * Content: 0
-
-### Quit a forum
-
-* URL: /api/forum/userQuitForum
-* Method: DELETE
-* Parameters
-    * Required: 
-        * forumId=[String]
-        * userId=[String]
-* Success Response
-    * Status: 200
-    * Content: 1
-* Error Response
-    * Status: 500\
-    Or
-    * Status: 200
-    * Content: 0
-* Note
-    * The administrator cannot quit the forum.
-
-### Forum member check
-
-* URL: /api/forum/isForumMember
-* Method: GET
-* Parameters
-    * Required: 
-        * forumId=[String]
-        * userId=[String]
-* Success Response
-    * Status: 200
-    * Content: true or false
-* Error Response
-    * Status: 500
 
 ## Sell Controller
 

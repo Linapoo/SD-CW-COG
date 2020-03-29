@@ -92,23 +92,23 @@ public class ForumController {
                 jsonObject.getBoolean("stick"));
     }
 
-    @PostMapping("userJoinForum")
-    public int joinForum(@RequestBody UserForum userForum) {
-        if (StringUtils.isEmpty(userForum.getForumId()) || StringUtils.isEmpty(userForum.getUserId()))
-            throw new InvalidParameterException("forumId and userId cannot be null");
-        return forumService.joinForum(userForum);
-    }
-
-    @DeleteMapping("userQuitForum")
-    public int quitForum(@RequestBody UserForum userForum) {
-        if (StringUtils.isEmpty(userForum.getForumId()) || StringUtils.isEmpty(userForum.getUserId()))
-            throw new InvalidParameterException("forumId and userId cannot be null");
-        return forumService.quitForum(userForum);
-    }
-
-    @GetMapping("isForumMember")
-    public boolean isForumMember(@NotBlank @RequestParam(value = "forumId") String forumId,
-                                 @NotBlank @RequestParam(value = "userId") String userId) {
-        return forumService.isForumMember(forumId, userId);
-    }
+//    @PostMapping("userJoinForum")
+//    public int joinForum(@RequestBody UserForum userForum) {
+//        if (StringUtils.isEmpty(userForum.getForumId()) || StringUtils.isEmpty(userForum.getUserId()))
+//            throw new InvalidParameterException("forumId and userId cannot be null");
+//        return forumService.joinForum(userForum);
+//    }
+//
+//    @DeleteMapping("userQuitForum")
+//    public int quitForum(@RequestBody UserForum userForum) {
+//        if (StringUtils.isEmpty(userForum.getForumId()) || StringUtils.isEmpty(userForum.getUserId()))
+//            throw new InvalidParameterException("forumId and userId cannot be null");
+//        return forumService.quitForum(userForum);
+//    }
+//
+//    @GetMapping("isForumMember")
+//    public boolean isForumMember(@NotBlank @RequestParam(value = "forumId") String forumId,
+//                                 @NotBlank @RequestParam(value = "userId") String userId) {
+//        return forumService.isForumMember(forumId, userId);
+//    }
 }
