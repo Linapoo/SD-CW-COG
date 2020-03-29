@@ -991,7 +991,7 @@ Get friend requests
 * Method: Post
 * RequestBody:\
         {\
-            "reviewerId" = [String],\
+            "sellerId" = [String],\
             "gameId" = [String],\
             "contact" = [String],\
             "price" = [Double],\
