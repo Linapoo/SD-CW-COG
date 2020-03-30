@@ -4,8 +4,10 @@ import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.repository.GameRepository;
 import com.group13.cog.service.GameService;
+import com.mongodb.BasicDBObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -68,6 +70,17 @@ public class GameServiceImpl implements GameService {
     @Override
     public int checkOwn(String userId, String gameId) {
         return gameRepository.checkOwn(userId, gameId);
+    }
+
+    @Override
+    public ResponseEntity<Page<Game>> searchGameType(Integer pageSize, Integer pageNo,
+            String type) {
+        return new ResponseEntity<>(gameRepository.searchGameType(pageSize, pageNo, type), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Page<BasicDBObject>> sortScore(Integer pageSize, Integer pageNo) {
+        return new ResponseEntity<>(gameRepository.sortScore(pageSize, pageNo), HttpStatus.OK);
     }
 
 

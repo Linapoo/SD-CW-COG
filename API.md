@@ -26,6 +26,7 @@
 * [Get Game Image](#Get-Game-Image)
 * [Update Game Information](#Update-Game-Information)
 * [Check if user own game](#Check-if-user-own-game)
+* [Search By Type](#Search-By-Type)
 
 
 [Friendship Controller](#friendship-controller)
@@ -249,6 +250,9 @@
 "timePerRound": [Integer],\
 "year": [Integer],\
 "playerAge": [Integer]\
+"link": [String]\
+"price": [Double]\
+"type": [String]\ 
 }
 * Success Response
     * Status: 200
@@ -444,6 +448,19 @@
 * Error Response
     * Status: 500
 
+### Search By Type
+* URL: /api/game/searchType
+* Method: Get
+* Parameters
+    * Required: 
+        * pageSize =[Integer]
+        * pageNo = [Integer]
+        * type = [String]
+* Success Response
+    * Status: 200
+    * Content: Page<Game>
+* Error Response
+    * Status: 500
 
 ## Friendship Controller
 

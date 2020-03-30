@@ -1,6 +1,7 @@
 package com.group13.cog.controller;
 
 import com.group13.cog.utils.FileStorage;
+import com.mongodb.BasicDBObject;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.service.GameService;
@@ -19,7 +20,7 @@ import org.springframework.core.io.Resource;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 /**
  * Created by Qizhen on 2020/3/10.
  */
@@ -38,7 +39,17 @@ public class GameController {
     @ResponseStatus(HttpStatus.CREATED)
     public int gamePublish(@NotBlank @RequestBody String gameInfo) throws JSONException {
         JSONObject gameObject = new JSONObject(gameInfo);
-        Game game = new Game(gameObject.getString("gameName"), gameObject.getString("publisher"), gameObject.getString("artist"), gameObject.getString("designer"), gameObject.getString("description"), gameObject.optInt("timePerRound"), gameObject.optInt("year"), gameObject.optInt("playerAge"));
+        Game game = new Game(gameObject.getString("gameName"), 
+                gameObject.getString("publisher"), 
+                gameObject.getString("artist"), 
+                gameObject.getString("designer"), 
+                gameObject.getString("description"),
+                gameObject.optInt("timePerRound"), 
+                gameObject.optInt("year"), 
+                gameObject.optInt("playerAge"), 
+                gameObject.getString("type"),
+                gameObject.getString("link"),
+                gameObject.getDouble("price"));
         return gameService.gamePublish(game);
     }
 
@@ -89,6 +100,19 @@ public class GameController {
         return gameService.searchGame(pageSize, pageNo, gameName);                                        
     }
 
+    @GetMapping("searchType")
+    public ResponseEntity<Page<Game>> searchGameType(@NotNull @RequestParam(value = "pageSize") Integer pageSize,
+                                                @NotNull @RequestParam(value = "pageNo") Integer pageNo,
+                                                @NotBlank @RequestParam(value = "type") String type){
+        return gameService.searchGameType(pageSize, pageNo, type);
+    }
+
+    @GetMapping("sortScore")
+    public ResponseEntity<Page<BasicDBObject>> sortByScore(@NotNull @RequestParam(value = "pageSize") Integer pageSize,
+                                                @NotNull @RequestParam(value = "pageNo") Integer pageNo){
+        return gameService.sortScore(pageSize, pageNo);
+    }
+
     @PutMapping("updateGameInfo")
     public ResponseEntity<Game> update(@NotBlank @RequestParam(value = "gameId") String gameId,
                                     @RequestParam(value = "gameName",required = false) String gameName,
@@ -98,8 +122,11 @@ public class GameController {
                                     @RequestParam(value = "designer", required = false) String designer,
                                     @RequestParam(value = "timePerRound", required = false) Integer timePerRound,
                                     @RequestParam(value = "year", required = false) Integer year,
-                                    @RequestParam(value = "playerAge", required = false) Integer playerAge){
-        Game game = new Game(gameName, publisher, artist, designer, description, timePerRound, year, playerAge);
+                                    @RequestParam(value = "playerAge", required = false) Integer playerAge,
+                                    @RequestParam(value = "type", required = false) String type,
+                                    @RequestParam(value = "link", required = false) String link,
+                                    @RequestParam(value = "price", required = false) Double price){
+        Game game = new Game(gameName, publisher, artist, designer, description, timePerRound, year, playerAge, type, link, price);
         game.setId(gameId);
         return gameService.update(game);                                  
     }

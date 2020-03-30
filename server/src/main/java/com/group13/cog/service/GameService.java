@@ -2,7 +2,9 @@ package com.group13.cog.service;
 
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
+import com.mongodb.BasicDBObject;
 
+import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -96,4 +98,22 @@ public interface GameService {
      * @return 1 if Own, 0 not
      */
 	int checkOwn(String userId, String gameId);
+    
+    /**
+     * search game by type 
+     * @param pageSize
+     * @param pageNo
+     * @param type
+     * @return Page<Game>
+     */
+	ResponseEntity<Page<Game>> searchGameType(Integer pageSize, Integer pageNo,
+			String type);
+
+    /**
+     * sort game by review score
+     * @param pageSize
+     * @param pageNo
+     * @return Page<Game>
+     */
+	ResponseEntity<Page<BasicDBObject>> sortScore(Integer pageSize, Integer pageNo);
 }

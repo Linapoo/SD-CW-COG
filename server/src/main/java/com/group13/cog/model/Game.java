@@ -18,6 +18,12 @@ public class Game {
 
     private String description;
 
+    private String type;
+
+    private String link;
+
+    private Double price;
+
     private String artist;
 
     private String designer;
@@ -32,8 +38,8 @@ public class Game {
 
     private String image;
 
-    public Game(String gameName, String publisher, String artist, String designer, String description, Integer timePerRound,
-            Integer year, Integer playerAge) {
+    public Game(String gameName, String publisher, String artist, String designer, String description,
+            Integer timePerRound, Integer year, Integer playerAge, String type, String link, Double price) {
         this.setGameName(gameName);
         this.setDescription(description);
         this.setArtist(artist);
@@ -42,9 +48,36 @@ public class Game {
         this.setTimePerRound(timePerRound);
         this.setYear(year);
         this.setPlayerAge(playerAge);
+        this.setType(type);
+        this.setlink(link);
+        this.setPrice(price);
     }
 
-    public void setImage(String image){
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getlink() {
+        return link;
+    }
+
+    public void setlink(String selllink) {
+        this.link = selllink;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setImage(String image) {
         this.image = image;
     }
 
