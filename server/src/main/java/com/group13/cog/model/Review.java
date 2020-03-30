@@ -2,7 +2,6 @@ package com.group13.cog.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -16,8 +15,7 @@ public class Review {
     @DBRef
     private User reviewer;
 
-    @DBRef
-    private Game game;
+    private String gameId;
 
     private String content;
 
@@ -53,12 +51,12 @@ public class Review {
         }
     }
     
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
-    public Game getGame() {
-        return game;
+    public String getGameId() {
+        return gameId;
     }
     
     public void setContent(String content){

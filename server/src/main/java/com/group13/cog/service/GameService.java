@@ -1,10 +1,11 @@
 package com.group13.cog.service;
 
+import java.util.List;
+
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.mongodb.BasicDBObject;
 
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -115,5 +116,12 @@ public interface GameService {
      * @param pageNo
      * @return Page<Game>
      */
-	ResponseEntity<Page<BasicDBObject>> sortScore(Integer pageSize, Integer pageNo);
+     ResponseEntity<Page<BasicDBObject>> sortScore(Integer pageSize, Integer pageNo);
+     
+     /**
+      * get a game avg score
+      * @param gameId
+      * @return
+      */
+     public ResponseEntity<BasicDBObject> getAvgScore(String gameId);
 }

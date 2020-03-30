@@ -7,7 +7,6 @@ import com.group13.cog.service.GameService;
 import com.mongodb.BasicDBObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -83,5 +82,8 @@ public class GameServiceImpl implements GameService {
         return new ResponseEntity<>(gameRepository.sortScore(pageSize, pageNo), HttpStatus.OK);
     }
 
-
+    @Override
+    public ResponseEntity<BasicDBObject> getAvgScore(String gameId) {
+        return new ResponseEntity<>(gameRepository.getAvgScore(gameId), HttpStatus.OK);
+    }
 }

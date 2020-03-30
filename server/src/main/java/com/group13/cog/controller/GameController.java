@@ -18,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
 import org.springframework.core.io.Resource;
 
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 /**
  * Created by Qizhen on 2020/3/10.
  */
@@ -112,6 +112,12 @@ public class GameController {
                                                 @NotNull @RequestParam(value = "pageNo") Integer pageNo){
         return gameService.sortScore(pageSize, pageNo);
     }
+    
+    @GetMapping("getAvgScore")
+    public ResponseEntity<BasicDBObject> getAvgScore(@NotBlank @RequestParam(value = "gameId") String gameId){
+        return gameService.getAvgScore(gameId);
+    }
+
 
     @PutMapping("updateGameInfo")
     public ResponseEntity<Game> update(@NotBlank @RequestParam(value = "gameId") String gameId,

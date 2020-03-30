@@ -3,7 +3,6 @@ package com.group13.cog.service.impl;
 import java.time.LocalDateTime;
 
 import com.group13.cog.exception.DataDuplicateException;
-import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.model.Review;
 import com.group13.cog.model.User;
@@ -36,10 +35,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ResponseEntity<Review> postReview(String userId, String gameId, Review review) {
         User reviewer = userRepository.findById(userId);
-        Game game = gameRepository.findById(gameId);
+        gameRepository.findById(gameId);
         if (reviewRepository.checkReviewExist(gameId, userId)==0){
             review.setReviewer(reviewer);
-            review.setGame(game);
+            review.setGameId(gameId);
             review.setPostTime(LocalDateTime.now());
             return new ResponseEntity<Review>(reviewRepository.saveReview(review), HttpStatus.OK);
         }else{

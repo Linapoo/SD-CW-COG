@@ -15,9 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
-import org.springframework.data.mongodb.core.aggregation.SkipOperation;
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Map;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -261,21 +260,30 @@ public class GameRepository {
         }
     }
 
+    public BasicDBObject getAvgScore(String gameId){
+        Aggregation aggregation = Aggregation.newAggregation(
+            Aggregation.match(Criteria.where("gameId").is(gameId)),
+            Aggregation.group("gameId").avg("score").as("averageScore")
+            );
+        List<BasicDBObject> list = mongoTemplate.aggregate(aggregation, "review", BasicDBObject.class).getMappedResults();
+        return list.get(0);
+    }
+
     public Page<BasicDBObject> sortScore(Integer pageSize, Integer pageNo) {
         LookupOperation lookupOperation = LookupOperation.newLookup()
         .from("review")
-        .localField("id")
-        .foreignField("game.$id")
+        .localField("gameId")
+        .foreignField("gameId")
         .as("review");
-        Aggregation aggregation = Aggregation.newAggregation(lookupOperation,
-        
-        Aggregation.unwind("review"),
-        Aggregation.group("review.game.$id").avg("review.score").as("averageScore")//.push("id").as("id").push("gameName").as("gameName")
-        //Aggregation.sort(Sort.by(Direction.DESC, "gameName"))
-        //Aggregation.project("gameName", "id")
+        Aggregation aggregation = Aggregation.newAggregation(
+        Aggregation.project("gameName", "id")
+        .and(ConvertOperators.ToString.toString("$_id")).as("gameId"),
+        lookupOperation,
+        Aggregation.unwind("review", true),
+        Aggregation.group("gameId").avg("review.score").as("averageScore").first("gameName").as("gameName"),
+        Aggregation.sort(Sort.by(Direction.DESC, "averageScore"))
         );
         List<BasicDBObject> list = mongoTemplate.aggregate(aggregation, "game", BasicDBObject.class).getMappedResults();
-        //List<Game> list = mongoTemplate.findAll(Game.class);
         return new Page<>(list, pageSize, pageNo);
 	}
 }

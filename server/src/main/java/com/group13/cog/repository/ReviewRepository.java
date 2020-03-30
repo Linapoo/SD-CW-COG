@@ -44,7 +44,7 @@ public class ReviewRepository {
     public int checkReviewExist(String gameId, String userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("reviewer.$id").is(new ObjectId(userId)));
-        query.addCriteria(Criteria.where("game.$id").is(new ObjectId(gameId)));
+        query.addCriteria(Criteria.where("gameId").is(gameId));
         Review ReviewRes = mongoTemplate.findOne(query, Review.class);
         if (ReviewRes != null){
             return 1;
@@ -115,7 +115,7 @@ public class ReviewRepository {
      */
     public Page<Review> viewGameReview(String gameId, Integer pageSize, Integer pageNo){
         Query query = new Query();
-        query.addCriteria(Criteria.where("game.$id").is(new ObjectId(gameId)));
+        query.addCriteria(Criteria.where("gameId").is(gameId));
         query.with(Sort.by(Direction.DESC, "postTime"));
         long total = mongoTemplate.count(query, Review.class);
         query.skip(pageSize*(pageNo-1)).limit(pageSize);

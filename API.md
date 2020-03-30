@@ -27,7 +27,8 @@
 * [Update Game Information](#Update-Game-Information)
 * [Check if user own game](#Check-if-user-own-game)
 * [Search By Type](#Search-By-Type)
-
+* [Get game's avg score](#get-game's-avg-score)
+* [Sort by avg Score](#Sort-by-avg-Score)
 
 [Friendship Controller](#friendship-controller)
 * [Friendship Entity](#Friendship-Entity)
@@ -459,6 +460,46 @@
 * Success Response
     * Status: 200
     * Content: Page<Game>
+* Error Response
+    * Status: 500
+
+### get game's avg score
+* URL: /api/game/getAvgScore
+* Method: Get
+* Parameters
+    * Required: 
+        * gameId = [String]
+* Success Response
+    * Status: 200
+    * Content: \
+    {\
+        "_id": [String] :(gameId),\
+        "averageScore": [Double](null if not review)\
+    }
+* Error Response
+    * Status: 500
+
+### Sort by avg Score
+* URL: /api/game/sortScore
+* Method: Get
+* Parameters
+    * Required: 
+        * pageSize =[Integer]
+        * pageNo = [Integer]
+* Success Response
+    * Status: 200
+    * Content: \
+    "data": [\
+        {\
+            "_id": [String] :(gameId)\
+            "averageScore": [Double],(null if no review)\
+            "gameName": [String]\
+        },\
+        ......\
+    ],\
+    "pageSize": [Integer],\
+    "pageNo": [Integer],\
+    "totalPage": [Integer]\
 * Error Response
     * Status: 500
 
