@@ -2,6 +2,7 @@ package com.group13.cog.controller;
 
 import com.group13.cog.utils.FileStorage;
 import com.mongodb.BasicDBObject;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.service.GameService;
@@ -70,9 +71,9 @@ public class GameController {
     }
 
     @PostMapping("addToUser")
-    public int gameAddToUser(@NotBlank @RequestParam(value = "userId") String userId,
-                            @NotBlank @RequestParam(value = "gameId") String gameId){
-        return gameService.gameAddToUser(userId, gameId);
+    public int gameAddToUser(@NotBlank @RequestBody String addToUserInfo) throws JSONException {
+        JSONObject addToUserObject = new JSONObject(addToUserInfo);
+        return gameService.gameAddToUser(addToUserObject.getString("userId"), addToUserObject.getString("gameId"));
     }
 
     @DeleteMapping("delToUser")

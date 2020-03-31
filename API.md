@@ -315,9 +315,11 @@
 * URL: /api/game/addToUser
 * Method: Post
 * Parameters
-    * Required: 
-        * gameId=[String]
-        * userId=[String]
+    * Required: \
+     {\
+     "gameId": [String],\
+     "userId": [String]\
+     }
 * Success Response
     * Status: 200
     * Content: 1

@@ -1,6 +1,5 @@
 package com.group13.cog.service;
 
-import java.util.List;
 
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
