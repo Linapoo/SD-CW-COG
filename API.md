@@ -123,7 +123,7 @@
 * RequestBody
 {\
     "userName": [String],\
-    "password": [String],\
+    "password": [String]\
 }
 * Success Response
     * Status: 200
@@ -137,14 +137,15 @@
 * URL: /api/user/updateUserInfo
 * Method: PUT
 * Parameters
-    * Required: 
-        * uid=[String]
-    * Optional:
-        * userName=[String]
-        * email=[String]
-        * city=[String]
-        * gender=[Integer] (0 male, 1 female)
-        * age=[Integer]
+    * {\
+    "uid":[String],\
+    "userName": [String],\
+    "password": [String],\
+    "email": [String],\
+    "city": [String],\
+    "gender": [Integer],\
+    "age": [Integer]\
+}
 * Success Response
     * Status: 200
     * Content: {User}
@@ -178,10 +179,11 @@
 * URL: /api/user/resetPwd
 * Method: PUT
 * Parameters
-    * Required: 
-        * uid=[String]
-        * oldPwd=[String]
-        * newPwd=[String]
+    {\
+         "uid":[String],\
+         "oldPwd":[String],\
+         "newPwd":[String]\
+    }
 * Success Response
     * Status: 200
     * Content: 1
@@ -334,6 +336,7 @@
 * Parameters
     * Required: 
         * gameId=[String]
+        * userId= [String]
 * Success Response
     * Status: 200
     * Content: 1
@@ -418,17 +421,17 @@
 * URL: /api/user/updateGameInfo
 * Method: PUT
 * Parameters
-    * Required: 
-        * gameId=[String]
-    * Optional:
-        * gameName=[String]
-        * publisher=[String]
-        * description=[String]
-        * artist=[String]
-        * designer=[String] 
-        * timePerRound=[Integer]
-        * year=[Integer]
-        * playerAge=[Integer]
+    {\
+        "gameId":[String],\
+        "gameName":[String],\
+        "publisher":[String],\
+        "description":[String],\
+        "artist":[String],\
+        "designer":[String],\
+        "timePerRound":[Integer],\
+        "year":[Integer],\
+        "playerAge":[Integer],\
+    }
 * Success Response
     * Status: 200
     * Content: {Game}

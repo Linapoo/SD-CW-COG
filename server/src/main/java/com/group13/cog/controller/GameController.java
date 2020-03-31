@@ -2,7 +2,6 @@ package com.group13.cog.controller;
 
 import com.group13.cog.utils.FileStorage;
 import com.mongodb.BasicDBObject;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.service.GameService;
@@ -119,22 +118,21 @@ public class GameController {
         return gameService.getAvgScore(gameId);
     }
 
-
     @PutMapping("updateGameInfo")
-    public ResponseEntity<Game> update(@NotBlank @RequestParam(value = "gameId") String gameId,
-                                    @RequestParam(value = "gameName",required = false) String gameName,
-                                    @RequestParam(value = "publisher", required = false) String publisher,
-                                    @RequestParam(value = "description", required = false) String description,
-                                    @RequestParam(value = "artist", required = false) String artist,
-                                    @RequestParam(value = "designer", required = false) String designer,
-                                    @RequestParam(value = "timePerRound", required = false) Integer timePerRound,
-                                    @RequestParam(value = "year", required = false) Integer year,
-                                    @RequestParam(value = "playerAge", required = false) Integer playerAge,
-                                    @RequestParam(value = "type", required = false) String type,
-                                    @RequestParam(value = "link", required = false) String link,
-                                    @RequestParam(value = "price", required = false) Double price){
-        Game game = new Game(gameName, publisher, artist, designer, description, timePerRound, year, playerAge, type, link, price);
-        game.setId(gameId);
+    public ResponseEntity<Game> update(@NotBlank @RequestBody String gameUpdate) throws JSONException {
+        JSONObject gameObject = new JSONObject(gameUpdate);
+        Game game = new Game(gameObject.getString("gameName"), 
+                gameObject.getString("publisher"), 
+                gameObject.getString("artist"), 
+                gameObject.getString("designer"), 
+                gameObject.getString("description"),
+                gameObject.optInt("timePerRound"), 
+                gameObject.optInt("year"), 
+                gameObject.optInt("playerAge"), 
+                gameObject.getString("type"),
+                gameObject.getString("link"),
+                gameObject.getDouble("price"));
+        game.setId(gameObject.getString("gameId"));
         return gameService.update(game);                                  
     }
 

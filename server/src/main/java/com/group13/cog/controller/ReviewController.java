@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.group13.cog.model.Page;
 import com.group13.cog.model.Review;
+import com.group13.cog.repository.ReviewRepository;
 import com.group13.cog.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,10 @@ public class ReviewController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Review> update(@NotBlank @RequestParam(value = "reviewId") String reviewId,
-                                    @RequestParam(value = "content", required = false) String content,
-                                    @RequestParam(value = "score", required = false) Integer score,
-                                    @RequestParam(value = "anonymous", required = false) Integer anonymous){
-        Review review = new Review(content, score, anonymous);
-        review.setId(reviewId);
+    public ResponseEntity<Review> update(@NotBlank @RequestBody String reviewUpdate) throws JSONException {
+        JSONObject reviewObject = new JSONObject(reviewUpdate);
+        Review review = new Review(reviewObject.getString("content"), reviewObject.optInt("score"), reviewObject.optInt("anonymous"));
+        review.setId(reviewObject.getString("reviewId"));
         return reviewService.updateReview(review);
     }
 

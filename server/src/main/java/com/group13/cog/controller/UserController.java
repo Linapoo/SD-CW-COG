@@ -50,26 +50,17 @@ public class UserController {
     }
 
     @PutMapping("updateUserInfo")
-    public ResponseEntity<User> updateUserInfo(@NotBlank @RequestParam(value = "uid") String uid,
-                                               @RequestParam(value = "userName", required = false) String userName,
-                                               @RequestParam(value = "email", required = false) String email,
-                                               @RequestParam(value = "city", required = false) String city,
-                                               @RequestParam(value = "gender", required = false) Integer gender,
-                                               @RequestParam(value = "age", required = false) Integer age) {
-        if (StringUtils.isEmpty(userName) && StringUtils.isEmpty(email)
-                && StringUtils.isEmpty(city) && gender == null && age == null)
-            return new ResponseEntity<>(null, HttpStatus.OK);
-
-        User user = new User(userName, email, null, city, gender, age);
-        user.setId(uid);
+    public ResponseEntity<User> updateUserInfo(@NotBlank @RequestBody String userUpdate) throws JSONException {
+        JSONObject userObject = new JSONObject(userUpdate);
+        User user = new User(userObject.getString("userName"), userObject.getString("email"), null, userObject.getString("city"), userObject.optInt("gender"), userObject.optInt("age"));
+        user.setId(userObject.getString("uid"));
         return userService.updateUserInfo(user);
     }
 
     @PutMapping("resetPwd")
-    public int resetPwd(@NotBlank @RequestParam(value = "uid") String uid,
-                        @NotBlank @RequestParam(value = "oldPwd") String oldPwd,
-                        @NotBlank @RequestParam(value = "newPwd") String newPwd) {
-        return userService.resetPwd(uid, oldPwd, newPwd);
+    public int resetPwd(@NotBlank @RequestBody String resetInfo) throws JSONException {
+        JSONObject pwdObject = new JSONObject(resetInfo);
+        return userService.resetPwd(pwdObject.getString("uid"), pwdObject.getString("oldPwd"), pwdObject.getString("newPwd"));
     }
 
     @PostMapping("updateAvatar")
@@ -85,7 +76,7 @@ public class UserController {
         filestorage.store(avatar, filename);
         return userService.updateUserInfo(user) == null ? null : 1;
     }
-
+     
     @GetMapping(value = "getAvatar")
     public ResponseEntity<Resource> getAvatar(@NotBlank @RequestParam(value = "uid") String uid) {
         User user = userService.findbyId(uid).getBody();
