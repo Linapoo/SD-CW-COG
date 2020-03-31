@@ -52,11 +52,9 @@ public class ForumController {
     }
 
     @DeleteMapping("deletePost")
-    public int deletePost(@RequestBody String deleteInfo) throws JSONException {
-        JSONObject jsonObject = new JSONObject(deleteInfo);
-        if (!jsonObject.has("postId") || !jsonObject.has("userId"))
-            throw new InvalidParameterException("postId and userId cannot be null");
-        return forumService.deletePost(jsonObject.getString("postId"), jsonObject.getString("userId"));
+    public int deletePost(@NotBlank @RequestParam(value = "postId") String postId,
+                          @NotBlank @RequestParam(value = "userId") String userId) {
+        return forumService.deletePost(postId, userId);
     }
 
     @GetMapping("getReplies")
@@ -76,11 +74,9 @@ public class ForumController {
     }
 
     @DeleteMapping("deleteReply")
-    public int deleteReply(@RequestBody String deleteInfo) throws JSONException {
-        JSONObject jsonObject = new JSONObject(deleteInfo);
-        if (!jsonObject.has("replyId") || !jsonObject.has("userId"))
-            throw new InvalidParameterException("replyId and userId cannot be null");
-        return forumService.deleteReply(jsonObject.getString("replyId"), jsonObject.getString("userId"));
+    public int deleteReply(@NotBlank @RequestParam(value = "replyId") String replyId,
+                           @NotBlank @RequestParam(value = "userId") String userId) {
+        return forumService.deleteReply(replyId, userId);
     }
 
     @PostMapping("stickPost")

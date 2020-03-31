@@ -65,13 +65,9 @@ public class FriendshipController {
     }
 
     @DeleteMapping("delete")
-    public int deleteFriend(@NotBlank @RequestBody String deleteInfo) throws JSONException {
-        JSONObject jsonObject = new JSONObject(deleteInfo);
-        if (!jsonObject.has("userId") || !jsonObject.has("friendId"))
-            throw new InvalidParameterException("userId and friendId cannot be null");
-
-        return friendshipService.deleteFriend(jsonObject.getString("userId"),
-                jsonObject.getString("friendId"));
+    public int deleteFriend(@NotBlank @RequestParam(value = "userId") String uid,
+                            @NotBlank @RequestParam(value = "friendId") String friendId) {
+        return friendshipService.deleteFriend(uid, friendId);
     }
 
     @GetMapping("recommend")
