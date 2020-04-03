@@ -85,7 +85,7 @@ public class UserController {
             resource = filestorage.loadAsResource(user.getAvatar());
         }
         else {
-            resource = filestorage.loadAsResource("error.png");
+            resource = filestorage.loadError();
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)

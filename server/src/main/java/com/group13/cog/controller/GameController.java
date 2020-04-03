@@ -159,7 +159,7 @@ public class GameController {
             resource = filestorage.loadAsResource(game.getImage());
         }
         else {
-            resource = filestorage.loadAsResource("error.png");
+            resource = filestorage.loadError();
         }
         return ResponseEntity.ok()
         .contentType(MediaType.IMAGE_JPEG)
