@@ -1,10 +1,16 @@
-**How to run the Front-end**
-```bash
+## Project setup
+```
 yarn install
 ```
-then
-```bash
+
+### Compiles and hot-reloads for development
+```
 yarn run serve
+```
+
+### Compiles and minifies for production
+```
+yarn run build
 ```
 
 **Structure**
