@@ -236,7 +236,10 @@
     "publisher": [String],\
     "timePerRound": [Integer],\
     "year": [Integer],\
-    "playerAge": [Integer]\
+    "playerAge": [Integer],\
+    "link": [String],\
+    "price": [Double],\
+    "type": [String]
     }
 
 ### Game Publish
