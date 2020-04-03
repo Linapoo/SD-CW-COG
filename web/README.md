@@ -1,21 +1,9 @@
-# douban
+**How to run the Front-end**
+$ yarn install
+$ yarn run serve
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Structure
+**Structure**
+----
 ```
 ├── dist               
 ├── src                 
@@ -31,3 +19,4 @@ yarn run build
 ├── bable.config.js    Babel configuration file
 └── package.json
 ```
+

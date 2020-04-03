@@ -11,21 +11,21 @@
 					</h1>
 
 					<div class="form-container animated fadeIn" style="animation-delay:.7s;">
-						<form method="POST">
+						<form style="height: 60vh;overflow: auto;">
 							<label for>
 								<i class="fab fa-amilia"></i> Name
 							</label>
-							<input type="text" name="name" placeholder="Name" required autofocus />
+							<input type="text" name="name" placeholder="Name" v-model="info.userName" required autofocus />
 
 							<label for>
 								<i class="fas fa-at"></i> Email
 							</label>
-							<input type="email" name="email" placeholder="E-mail" />
+							<input type="email" name="email" v-model="info.email" placeholder="E-mail" />
 
 							<label for>
 								<i class="fab fa-slack-hash"></i> Password
 							</label>
-							<input type="password" name="password" placeholder="Password" />
+							<input type="password" name="password" v-model="info.password" placeholder="Password" />
 
 							<label for>
 								<i class="fab fa-slack-hash"></i> Confirm Password
@@ -34,7 +34,7 @@
 							<label for>
 								<i class="fab fa-amilia"></i> Age
 							</label>
-							<input type="text" placeholder="Age" required autofocus />
+							<input type="text" placeholder="Age" v-model="info.age" required autofocus />
 							<label for>
 								<i class="fab fa-amilia"></i> Gender
 							</label>
@@ -42,23 +42,19 @@
 							<br />
 							<div style="display: flex;">
 								<span style="width: 50px;">Male</span>
-								<input type="radio" style="width: 150px;" name="gender" id="red" />
+								<input type="radio" style="width: 150px;" name="gender" :value="0" v-model="info.gender" />
 							</div>
 							<div style="display: flex;">
 								<span style="width: 50px;">Female</span>
-								<input type="radio" style="width: 150px;" name="gender" id="red" />
-							</div>
-							<div style="display: flex;">
-								<span style="width: 50px;">Others</span>
-								<input type="radio" style="width: 150px;" name="gender" id="red" />
+								<input type="radio" style="width: 150px;" name="gender" :value="1" v-model="info.gender" />
 							</div>
 
 							<label for>
 								<i class="fab fa-amilia"></i> City
 							</label>
-							<input type="text" placeholder="City" required autofocus />
+							<input type="text" placeholder="City" v-model="info.city" required autofocus />
 							<div class="submit-buttons">
-								<input type="submit" value="Submit" style="background:#55efc4;" />
+								<input value="Submit" @click="register" style="background:#55efc4;" />
 							</div>
 						</form>
 					</div>
@@ -76,13 +72,37 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
 	name: 'home',
 	components: {
-		HelloWorld
+
+	},
+	data() {
+		return {
+			info: {}
+		}
+	},
+	created() {
+
+	},
+	methods: {
+		register() {
+			this.$http({
+				url: '/user/register',
+				method: 'post',
+				data: this.info
+			}).then(res => {
+				this.$Notify({
+					title: 'Register Ok',
+					type: 'success'
+				})
+				this.$router.push('/')
+			}).catch(err => {
+				// this.$router.push('/')
+			})
+		}
 	}
 }
 </script>

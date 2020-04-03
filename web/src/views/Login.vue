@@ -11,19 +11,19 @@
 					</h1>
 
 					<div class="form-container animated fadeIn" style="animation-delay:.7s;">
-						<form method="POST">
+						<form>
 							<label for>
-								<i class="fas fa-at"></i> Email
+								<i class="fas fa-at"></i> UserName
 							</label>
-							<input type="email" name="email" placeholder="E-mail" />
+							<input name="userName" v-model="user.userName" />
 
 							<label for>
 								<i class="fab fa-slack-hash"></i> Password
 							</label>
-							<input type="password" name="password" placeholder="Password" />
+							<input type="password" name="password" v-model="user.password" placeholder="Password" />
 
 							<div class="submit-buttons">
-								<input type="submit" value="Connect" />
+								<input type="button" value="Connect" @click="login" />
 								<input
 									type="button"
 									value="Sign Up"
@@ -49,13 +49,27 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
-	name: 'home',
-	components: {
-		HelloWorld
+	data() {
+		return {
+			user: {}
+		}
+	},
+	methods: {
+		login() {
+			this.$http({
+				url: '/user/login',
+				method: 'post',
+				data: this.user
+			}).then(res => {
+				sessionStorage.setItem('userName', res.userName)
+				sessionStorage.setItem('userId', res.id)
+				sessionStorage.setItem('userInfo', JSON.stringify(res))
+				this.$router.push('/page/home')
+			})
+		}
 	}
 }
 </script>
