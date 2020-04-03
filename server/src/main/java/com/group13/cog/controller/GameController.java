@@ -2,6 +2,7 @@ package com.group13.cog.controller;
 
 import com.group13.cog.utils.FileStorage;
 import com.mongodb.BasicDBObject;
+import com.group13.cog.exception.DataNotFoundException;
 import com.group13.cog.model.Game;
 import com.group13.cog.model.Page;
 import com.group13.cog.service.GameService;
@@ -153,10 +154,16 @@ public class GameController {
     @GetMapping("getImage")
     public ResponseEntity<Resource> viewImage(@NotBlank @RequestParam(value = "gameId") String gameId){
         Game game = gameService.viewGame(gameId).getBody();
-        Resource resource = filestorage.loadAsResource(game.getImage());
+        Resource resource;
+        if (game.getImage() != null){
+            resource = filestorage.loadAsResource(game.getImage());
+        }
+        else {
+            resource = filestorage.loadAsResource("error.png");
+        }
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
+        .contentType(MediaType.IMAGE_JPEG)
+        .body(resource);
     }
 
 

@@ -213,6 +213,8 @@ public class GameRepository {
             update.set("type", game.getType());
         if (!StringUtils.isEmpty(game.getlink()))
             update.set("link", game.getlink());
+        if (!StringUtils.isEmpty(game.getImage()))
+            update.set("image", game.getImage());
         if (game.getTimePerRound() != null)
             update.set("timePerRound", game.getTimePerRound());
         if (game.getYear() != null)

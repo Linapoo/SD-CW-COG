@@ -80,7 +80,13 @@ public class UserController {
     @GetMapping(value = "getAvatar")
     public ResponseEntity<Resource> getAvatar(@NotBlank @RequestParam(value = "uid") String uid) {
         User user = userService.findbyId(uid).getBody();
-        Resource resource = filestorage.loadAsResource(user.getAvatar());
+        Resource resource;
+        if (user.getAvatar() != null){
+            resource = filestorage.loadAsResource(user.getAvatar());
+        }
+        else {
+            resource = filestorage.loadAsResource("error.png");
+        }
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
