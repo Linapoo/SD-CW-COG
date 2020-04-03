@@ -1,6 +1,11 @@
 **How to run the Front-end**
-$ yarn install
-$ yarn run serve
+```bash
+yarn install
+```
+then
+```bash
+yarn run serve
+```
 
 **Structure**
 ----
