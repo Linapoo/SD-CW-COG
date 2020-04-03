@@ -28,7 +28,7 @@
 					</div>
 
 					<div>
-						<span>Time Per Round</span>
+						<span>TimePerRound</span>
 						{{game.timePerRound}}
 					</div>
 					<div>
@@ -36,14 +36,14 @@
 						{{game.year}}
 					</div>
 					<div>
-						<span>Player Age</span>
+						<span>PlayerAge</span>
 						{{game.playerAge}}
 					</div>
 				</div>
 				<div class="buy" style="margin-left: 100px;min-width: 300px;">
 					<h3>Purchase</h3>
 					<br />
-					<a :href="game.link">{{game.link}}</a>
+					<a :href="game.link" target="_blank">Official Website</a>
 					&nbsp;&nbsp;
 					Price: £{{game.price}}
 					<br />
@@ -155,7 +155,7 @@ export default {
 		this.id = this.$route.query.id
 		this.getGameInfo().then(() => {
 			this.getComments()
-			this.getGameImg()
+			// this.getGameImg()
 		})
 		this.getUserGame()
 
@@ -171,7 +171,7 @@ export default {
 				url: '/game/getImage?gameId=5e81cf28ced64930812d9b1a',
 				method: 'get',
 			}).then(res => {
-                this.game.img = res
+				this.game.img = res
 
 			})
 		},
@@ -337,4 +337,5 @@ export default {
 		}
 	}
 }
+
 </style>

@@ -3,7 +3,7 @@
 		<h1>Trend</h1>
 		<ul>
 			<li v-for="(item,idx) in data" :key="idx" style="display: flex;justify-content: space-between;align-items: center;">
-				<span>
+				<span class="elli" :title="item.name">
 					{{idx + 1}} &nbsp;&nbsp;&nbsp;
 					<a @click="go(item.id)">{{item.name}}</a>
 				</span>
@@ -46,5 +46,11 @@ ul {
             width: 200px;
         }
 	}
+}
+.elli {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: break-all;
 }
 </style>

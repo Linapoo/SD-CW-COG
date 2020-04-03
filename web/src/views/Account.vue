@@ -168,11 +168,15 @@ export default {
 		readFile(e) {
 			var file = e.target.files[0];
 
-			//判断是否是图片类型
+			// Determine whether it is a picture type
 			if (!/image\/\w+/.test(file.type)) {
-				alert("只能选择图片");
+				alert("You can only choose pictures");
 				return false;
-			}
+            }
+            if(file.size/1000 > 500) {
+                alert('The Image is too large')
+                return
+            }
 			let formData = new FormData();
 			formData.append("avatar", file);
 			formData.append("uid", sessionStorage.getItem('userId'))

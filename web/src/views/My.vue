@@ -137,9 +137,9 @@ export default {
 		readFile(e) {
 			var file = e.target.files[0];
 
-			//Determine if it is a picture type
+			//Determine whether it is a picture type
 			if (!/image\/\w+/.test(file.type)) {
-				alert("Only picture file can be selected!");
+				alert("Only pictures can be selected.");
 				return false;
 			}
 			let formData = new FormData();
