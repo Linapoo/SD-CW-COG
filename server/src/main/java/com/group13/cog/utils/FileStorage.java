@@ -81,4 +81,18 @@ public class FileStorage {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
         }
     }
+
+    public Resource loadError(){
+        try {
+            Path file = Paths.get("./upload-files/error.png");
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new StorageFileNotFoundException("Could not read error image: ");
+            }
+        } catch (MalformedURLException e) {
+            throw new StorageFileNotFoundException("Could not read error image");
+        }
+    }
 }
